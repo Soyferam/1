@@ -734,6 +734,106 @@ nav {
     @media (max-width: 420px) {
       .title { font-size: 32px; }
     }
+
+    /* Accept Confirmation Modal Styles */
+.accept-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1003;
+}
+.accept-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--card);
+  padding: 20px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  border: 6px solid #2a2a2a;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.accept-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #1a1a1b;
+  border-radius: 15px;
+}
+.accept-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+}
+.accept-info {
+  flex: 1;
+}
+.accept-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.accept-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.accept-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.accept-detail-label {
+  font-weight: 600;
+  min-width: 80px;
+}
+.accept-detail-value {
+  font-weight: 700;
+  font-size: 14px;
+}
+.accept-btn {
+  background: var(--accent-green);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 28px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+.connect-code {
+  display: none;
+  background: #1a1a1b;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 20px;
+  word-break: break-all;
+}
+.timer {
+  display: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent-green);
+  margin-bottom: 20px;
+}
   </style>
 </head>
 <body>
@@ -806,104 +906,104 @@ nav {
   </div>
 </nav>
 
-    <!-- Create Modal -->
-    <div class="modal" id="createModal">
-      <div class="modal-content">
-        <button class="modal-close" id="closeCreateModal">&times;</button>
-        <div class="modal-header">
-          <div>BALANCE: 0 TON</div>
-          <button class="deposit">Deposit</button>
+   <!-- Create Modal -->
+<div class="modal" id="createModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeCreateModal">&times;</button>
+    <div class="modal-header">
+      <div>BALANCE: 0 TON</div>
+      <button class="deposit">Deposit</button>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">MAP</div>
+      <div class="custom-select" id="mapSelect">
+        <div class="selected">Dust2 <span>▼</span></div>
+        <div class="options">
+          <div data-value="Dust2">Dust2</div>
+          <div data-value="Mirage">Mirage</div>
+          <div data-value="Inferno">Inferno</div>
+          <div data-value="Nuke">Nuke</div>
+          <div data-value="Cache">Cache</div>
         </div>
-        <div class="modal-row">
-          <div class="modal-label">AMOUNT OF TON</div>
-          <div class="modal-amount" id="amountDisplay">
-            <span id="amountValue">0</span>
-            <img src="assets/ton.png" alt="TON logo">
-          </div>
-        </div>
-        <div class="keyboard">
-          <button class="key" data-value="1">1</button>
-          <button class="key" data-value="2">2</button>
-          <button class="key" data-value="3">3</button>
-          <button class="key" data-value="4">4</button>
-          <button class="key" data-value="5">5</button>
-          <button class="key" data-value="6">6</button>
-          <button class="key" data-value="7">7</button>
-          <button class="key" data-value="8">8</button>
-          <button class="key" data-value="9">9</button>
-          <button class="key" data-value=".">.</button>
-          <button class="key" data-value="0">0</button>
-          <button class="key delete" data-value="delete">⌫</button>
-        </div>
-        <div class="modal-row">
-          <div class="modal-label">MAP</div>
-          <div class="custom-select" id="mapSelect">
-            <div class="selected">Dust2 <span>▼</span></div>
-            <div class="options">
-              <div data-value="Dust2">Dust2</div>
-              <div data-value="Mirage">Mirage</div>
-              <div data-value="Inferno">Inferno</div>
-              <div data-value="Nuke">Nuke</div>
-              <div data-value="Cache">Cache</div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-row">
-          <div class="modal-label">WEAPON</div>
-          <div class="custom-select" id="weaponSelect">
-            <div class="selected">AK-47 <span>▼</span></div>
-            <div class="options">
-              <div data-value="AK-47">AK-47</div>
-              <div data-value="M4A4">M4A4</div>
-              <div data-value="M4A1-S">M4A1-S</div>
-              <div data-value="AWP">AWP</div>
-              <div data-value="Desert Eagle">Desert Eagle</div>
-              <div data-value="USP-S">USP-S</div>
-              <div data-value="Glock-18">Glock-18</div>
-              <div data-value="P250">P250</div>
-              <div data-value="Tec-9">Tec-9</div>
-              <div data-value="FAMAS">FAMAS</div>
-              <div data-value="Galil AR">Galil AR</div>
-              <div data-value="SSG 08">SSG 08</div>
-              <div data-value="SCAR-20">SCAR-20</div>
-              <div data-value="AUG">AUG</div>
-              <div data-value="SG 553">SG 553</div>
-              <div data-value="MP9">MP9</div>
-              <div data-value="MAC-10">MAC-10</div>
-              <div data-value="UMP-45">UMP-45</div>
-              <div data-value="P90">P90</div>
-              <div data-value="PP-Bizon">PP-Bizon</div>
-              <div data-value="MP7">MP7</div>
-              <div data-value="XM1014">XM1014</div>
-              <div data-value="MAG-7">MAG-7</div>
-              <div data-value="Sawed-Off">Sawed-Off</div>
-              <div data-value="Nova">Nova</div>
-              <div data-value="Negev">Negev</div>
-              <div data-value="M249">M249</div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-row">
-          <div class="modal-label">MODE</div>
-          <div class="custom-select" id="modeSelect">
-            <div class="selected">1v1 <span>▼</span></div>
-            <div class="options">
-              <div data-value="1v1">1v1</div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-row">
-          <div class="modal-label">LOBBY</div>
-          <div class="custom-select" id="lobbySelect">
-            <div class="selected">Public <span>▼</span></div>
-            <div class="options">
-              <div data-value="public">Public</div>
-            </div>
-          </div>
-        </div>
-        <button class="create-btn" id="createMatchBtn">Create</button>
       </div>
     </div>
+    <div class="modal-row">
+      <div class="modal-label">WEAPON</div>
+      <div class="custom-select" id="weaponSelect">
+        <div class="selected">AK-47 <span>▼</span></div>
+        <div class="options">
+          <div data-value="AK-47">AK-47</div>
+          <div data-value="M4A4">M4A4</div>
+          <div data-value="M4A1-S">M4A1-S</div>
+          <div data-value="AWP">AWP</div>
+          <div data-value="Desert Eagle">Desert Eagle</div>
+          <div data-value="USP-S">USP-S</div>
+          <div data-value="Glock-18">Glock-18</div>
+          <div data-value="P250">P250</div>
+          <div data-value="Tec-9">Tec-9</div>
+          <div data-value="FAMAS">FAMAS</div>
+          <div data-value="Galil AR">Galil AR</div>
+          <div data-value="SSG 08">SSG 08</div>
+          <div data-value="SCAR-20">SCAR-20</div>
+          <div data-value="AUG">AUG</div>
+          <div data-value="SG 553">SG 553</div>
+          <div data-value="MP9">MP9</div>
+          <div data-value="MAC-10">MAC-10</div>
+          <div data-value="UMP-45">UMP-45</div>
+          <div data-value="P90">P90</div>
+          <div data-value="PP-Bizon">PP-Bizon</div>
+          <div data-value="MP7">MP7</div>
+          <div data-value="XM1014">XM1014</div>
+          <div data-value="MAG-7">MAG-7</div>
+          <div data-value="Sawed-Off">Sawed-Off</div>
+          <div data-value="Nova">Nova</div>
+          <div data-value="Negev">Negev</div>
+          <div data-value="M249">M249</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">MODE</div>
+      <div class="custom-select" id="modeSelect">
+        <div class="selected">1v1 <span>▼</span></div>
+        <div class="options">
+          <div data-value="1v1">1v1</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">LOBBY</div>
+      <div class="custom-select" id="lobbySelect">
+        <div class="selected">Public <span>▼</span></div>
+        <div class="options">
+          <div data-value="public">Public</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">AMOUNT OF TON</div>
+      <div class="modal-amount" id="amountDisplay">
+        <span id="amountValue">0</span>
+        <img src="assets/ton.png" alt="TON logo">
+      </div>
+    </div>
+    <div class="keyboard">
+      <button class="key" data-value="1">1</button>
+      <button class="key" data-value="2">2</button>
+      <button class="key" data-value="3">3</button>
+      <button class="key" data-value="4">4</button>
+      <button class="key" data-value="5">5</button>
+      <button class="key" data-value="6">6</button>
+      <button class="key" data-value="7">7</button>
+      <button class="key" data-value="8">8</button>
+      <button class="key" data-value="9">9</button>
+      <button class="key" data-value=".">.</button>
+      <button class="key" data-value="0">0</button>
+      <button class="key delete" data-value="delete">⌫</button>
+    </div>
+    <button class="create-btn" id="createMatchBtn">Create</button>
+  </div>
+</div>
 
     <!-- Notification Modal -->
     <div class="notification-modal" id="notificationModal">
@@ -921,18 +1021,66 @@ nav {
       </div>
     </div>
 
-    <!-- Profile Modal -->
-    <div class="profile-modal" id="profileModal">
-      <div class="profile-content">
-        <button class="modal-close" id="closeProfileModal">&times;</button>
-        
-        <div class="profile-header">
-          <img src="assets/player.png" class="profile-avatar" alt="Profile avatar">
-          <div class="profile-info">
-            <div class="profile-name">Player123</div>
-            <button class="copy-code-btn" id="copyCodeBtn">Copy my code</button>
+      <!-- Profile Modal -->
+  <div class="profile-modal" id="profileModal">
+    <div class="profile-content">
+      <button class="modal-close" id="closeProfileModal">&times;</button>
+      <div class="profile-header">
+        <img src="assets/player.png" class="profile-avatar" alt="Profile avatar">
+        <div class="profile-info">
+          <div class="profile-name">Player123</div>
+          <button class="copy-code-btn" id="copyCodeBtn">Copy my code</button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <svg class="chart" id="statsChart" viewBox="0 0 350 150">
+          <defs>
+            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:rgba(0,255,102,0.3);stop-opacity:1" />
+              <stop offset="100%" style="stop-color:rgba(0,255,102,0);stop-opacity:0" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="chart-cursor" id="chartCursor"></div>
+        <div class="chart-tooltip" id="chartTooltip"></div>
+      </div>
+      <div class="stats-list" id="statsList"></div>
+    </div>
+  </div>
+
+  <!-- Accept Confirmation Modal -->
+  <div class="accept-modal" id="acceptModal">
+    <div class="accept-content">
+      <button class="modal-close" id="closeAcceptModal">&times;</button>
+      <div class="accept-header">
+        <img src="assets/player.png" class="accept-avatar" id="acceptAvatar" alt="Opponent avatar">
+        <div class="accept-info">
+          <div class="accept-name" id="acceptName"></div>
+        </div>
+      </div>
+      <div class="accept-details" id="acceptDetails">
+        <div class="accept-detail">
+          <div class="accept-detail-label">MAP</div>
+          <div class="accept-detail-value" id="acceptMap"></div>
+        </div>
+        <div class="accept-detail">
+          <div class="accept-detail-label">WEAPON</div>
+          <div class="accept-detail-value" id="acceptWeapon"></div>
+        </div>
+        <div class="accept-detail">
+          <div class="accept-detail-label">STAKE</div>
+          <div class="accept-detail-value" id="acceptStake">
+            <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%;vertical-align:middle" alt="TON logo">
+            <span></span>
           </div>
         </div>
+      </div>
+      <div class="connect-code" id="connectCode"></div>
+      <div class="timer" id="timer"></div>
+      <button class="accept-btn" id="confirmAcceptBtn">ACCEPT</button>
+    </div>
+  </div>
+</div>
 
         <div class="chart-container">
           <svg class="chart" id="statsChart" viewBox="0 0 350 150">
@@ -951,514 +1099,608 @@ nav {
       </div>
     </div>
   </div>
+  
 
-  <script>
-    const sample = [
-      {id: 1, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player1'},
-      {id: 2, stake: 2, map: 'Inferno', weapon: 'M4A4', player: 'Player2'},
-      {id: 3, stake: 1, map: 'Nuke', weapon: 'AWP', player: 'Player3'},
-      {id: 4, stake: 5, map: 'Dust2', weapon: 'AK-47', player: 'Player4'},
-      {id: 5, stake: 1, map: 'Mirage', weapon: 'Desert Eagle', player: 'Player5'},
-      {id: 6, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player6'},
-      {id: 7, stake: 7, map: 'Overpass', weapon: 'AK-47', player: 'Player7'},
-      {id: 8, stake: 3, map: 'Dust2', weapon: 'M4A1', player: 'Player8'},
-    ];
+ <script>
+const sample = [
+  {id: 1, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player1', avatar: 'assets/player.png'},
+  {id: 2, stake: 2, map: 'Inferno', weapon: 'M4A4', player: 'Player2', avatar: 'assets/player.png'},
+  {id: 3, stake: 1, map: 'Nuke', weapon: 'AWP', player: 'Player3', avatar: 'assets/player.png'},
+  {id: 4, stake: 5, map: 'Dust2', weapon: 'AK-47', player: 'Player4', avatar: 'assets/player.png'},
+  {id: 5, stake: 1, map: 'Mirage', weapon: 'Desert Eagle', player: 'Player5', avatar: 'assets/player.png'},
+  {id: 6, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player6', avatar: 'assets/player.png'},
+  {id: 7, stake: 7, map: 'Overpass', weapon: 'AK-47', player: 'Player7', avatar: 'assets/player.png'},
+  {id: 8, stake: 3, map: 'Dust2', weapon: 'M4A1', player: 'Player8', avatar: 'assets/player.png'},
+];
 
-    // Sample stats data
-    const statsData = [
-      { match: 1, result: 'win', amount: 10, weapon: 'AK-47', map: 'Dust2', balance: 10 },
-      { match: 2, result: 'win', amount: 15, weapon: 'AWP', map: 'Mirage', balance: 25 },
-      { match: 3, result: 'loss', amount: -8, weapon: 'M4A4', map: 'Inferno', balance: 17 },
-      { match: 4, result: 'win', amount: 12, weapon: 'AK-47', map: 'Dust2', balance: 29 },
-      { match: 5, result: 'loss', amount: -15, weapon: 'Desert Eagle', map: 'Nuke', balance: 14 },
-      { match: 6, result: 'win', amount: 20, weapon: 'AWP', map: 'Mirage', balance: 34 },
-      { match: 7, result: 'loss', amount: -12, weapon: 'M4A1-S', map: 'Cache', balance: 22 },
-      { match: 8, result: 'win', amount: 18, weapon: 'AK-47', map: 'Dust2', balance: 40 },
-      { match: 9, result: 'win', amount: 25, weapon: 'AWP', map: 'Overpass', balance: 65 },
-      { match: 10, result: 'loss', amount: -10, weapon: 'P90', map: 'Mirage', balance: 55 }
-    ];
+const statsData = [
+  { match: 1, result: 'win', amount: 10, weapon: 'AK-47', map: 'Dust2', balance: 10 },
+  { match: 2, result: 'win', amount: 15, weapon: 'AWP', map: 'Mirage', balance: 25 },
+  { match: 3, result: 'loss', amount: -8, weapon: 'M4A4', map: 'Inferno', balance: 17 },
+  { match: 4, result: 'win', amount: 12, weapon: 'AK-47', map: 'Dust2', balance: 29 },
+  { match: 5, result: 'loss', amount: -15, weapon: 'Desert Eagle', map: 'Nuke', balance: 14 },
+  { match: 6, result: 'win', amount: 20, weapon: 'AWP', map: 'Mirage', balance: 34 },
+  { match: 7, result: 'loss', amount: -12, weapon: 'M4A1-S', map: 'Cache', balance: 22 },
+  { match: 8, result: 'win', amount: 18, weapon: 'AK-47', map: 'Dust2', balance: 40 },
+  { match: 9, result: 'win', amount: 25, weapon: 'AWP', map: 'Overpass', balance: 65 },
+  { match: 10, result: 'loss', amount: -10, weapon: 'P90', map: 'Mirage', balance: 55 }
+];
 
-    const list = document.getElementById('matchesList');
-    const createBtn = document.getElementById('createBtn');
-    const modal = document.getElementById('createModal');
-    const amountDisplay = document.getElementById('amountValue');
-    const keys = document.querySelectorAll('.key');
-    const createMatchBtn = document.getElementById('createMatchBtn');
-    const notif = document.getElementById('notif');
-    const customSelects = document.querySelectorAll('.custom-select');
-    const closeCreateModalBtn = document.getElementById('closeCreateModal');
-    const bellBtn = document.getElementById('bellBtn');
-    const notificationModal = document.getElementById('notificationModal');
-    const closeNotificationModal = document.getElementById('closeNotificationModal');
-    const notificationList = document.getElementById('notificationList');
-    const fullMessageModal = document.getElementById('fullMessageModal');
-    const fullMessageContent = document.getElementById('fullMessageContent');
-    const backToNotifications = document.getElementById('backToNotifications');
-    const profileBtn = document.getElementById('profileBtn');
-    const profileModal = document.getElementById('profileModal');
-    const closeProfileModal = document.getElementById('closeProfileModal');
-    const copyCodeBtn = document.getElementById('copyCodeBtn');
-    const statsChart = document.getElementById('statsChart');
-    const chartCursor = document.getElementById('chartCursor');
-    const chartTooltip = document.getElementById('chartTooltip');
-    const statsList = document.getElementById('statsList');
+const notifications = [
+  { type: 'match', id: 'friend1', avatar: 'assets/player.png', name: 'Friend1', map: 'Dust2', weapon: 'AK-47', stake: 1 },
+  { type: 'match', id: 'friend2', avatar: 'assets/player.png', name: 'Friend2', map: 'Inferno', weapon: 'M4A4', stake: 2 },
+  { 
+    type: 'message', 
+    avatar: 'assets/dev.png', 
+    name: 'Frag Arena Team', 
+    message: 'Приветствуем тебя в Frag Arena! Готов к захватывающим 1 на 1 сражениям и настоящему драйву? Вноси депозит, получай уникальный код для подключения к матчу в CS2 и докажи, кто тут настоящий чемпион! Удачи и побед! 💥🎮',
+    shortMessage: 'Приветствуем тебя в Frag Arena! Готов к сражениям?...' 
+  }
+];
 
-    function drawChart() {
-      const chartWidth = 350;
-      const chartHeight = 150;
-      const padding = 20;
-      const dataWidth = chartWidth - padding * 2;
-      const dataHeight = chartHeight - padding * 2;
-      
-      const maxBalance = Math.max(...statsData.map(d => d.balance));
-      const minBalance = Math.min(...statsData.map(d => d.balance));
-      const balanceRange = maxBalance - minBalance;
-      
-      let pathData = '';
-      const points = [];
-      
-      statsData.forEach((data, index) => {
-        const x = padding + (index / (statsData.length - 1)) * dataWidth;
-        const y = padding + ((maxBalance - data.balance) / balanceRange) * dataHeight;
-        
-        points.push({ x, y, data });
-        
-        if (index === 0) {
-          pathData += `M ${x} ${y}`;
-        } else {
-          pathData += ` L ${x} ${y}`;
-        }
-      });
-      
-      // Clear previous chart
-      statsChart.innerHTML = '';
-      
-      // Add gradient definition
-      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-      gradient.setAttribute('id', 'chartGradient');
-      gradient.setAttribute('x1', '0%');
-      gradient.setAttribute('y1', '0%');
-      gradient.setAttribute('x2', '0%');
-      gradient.setAttribute('y2', '100%');
-      
-      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-      stop1.setAttribute('offset', '0%');
-      stop1.setAttribute('style', 'stop-color:rgba(0,255,102,0.3);stop-opacity:1');
-      
-      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-      stop2.setAttribute('offset', '100%');
-      stop2.setAttribute('style', 'stop-color:rgba(0,255,102,0);stop-opacity:0');
-      
-      gradient.appendChild(stop1);
-      gradient.appendChild(stop2);
-      defs.appendChild(gradient);
-      statsChart.appendChild(defs);
-      
-      // Add filled area under the line
-      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      const areaData = pathData + ` L ${points[points.length - 1].x} ${chartHeight - padding} L ${padding} ${chartHeight - padding} Z`;
-      areaPath.setAttribute('d', areaData);
-      areaPath.setAttribute('fill', 'url(#chartGradient)');
-      statsChart.appendChild(areaPath);
-      
-      // Add line
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      line.setAttribute('d', pathData);
-      line.setAttribute('class', 'chart-line');
-      statsChart.appendChild(line);
-      
-      // Add points
-      points.forEach((point, index) => {
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('cx', point.x);
-        circle.setAttribute('cy', point.y);
-        circle.setAttribute('r', 5);
-        circle.setAttribute('class', 'chart-point');
-        circle.setAttribute('data-index', index);
-        statsChart.appendChild(circle);
-      });
-      
-      // ИСПРАВЛЕННАЯ ЛОГИКА ИНТЕРАКТИВНОСТИ ГРАФИКА
-      let activePointIndex = -1;
-      
-      // Функция для показа данных по индексу точки
-      function showDataAtPoint(index) {
-        if (index < 0 || index >= points.length) return;
-        
-        const point = points[index];
-        const data = point.data;
-        
-        activePointIndex = index;
-        
-        // Показываем курсор точно на точке
-        chartCursor.style.left = `${(point.x / chartWidth) * 100}%`;
-        chartCursor.style.opacity = '1';
-        
-        // Показываем тултип
-        chartTooltip.innerHTML = `
-          <div>${data.result === 'win' ? 'Победа' : 'Поражение'}</div>
-          <div>${data.amount > 0 ? '+' : ''}${data.amount} TON</div>
-          <div>Баланс: ${data.balance} TON</div>
-        `;
-        
-        const tooltipX = Math.min(Math.max((point.x / chartWidth) * 100, 10), 90);
-        chartTooltip.style.left = `${tooltipX}%`;
-        chartTooltip.style.top = `${Math.max((point.y / chartHeight) * 100 - 15, 5)}%`;
-        chartTooltip.style.opacity = '1';
-        
-        // Подсвечиваем активную точку
-        const allPoints = statsChart.querySelectorAll('.chart-point');
-        allPoints.forEach((p, i) => {
-          if (i === index) {
-            p.setAttribute('r', '7');
-            p.setAttribute('fill', '#fff');
-          } else {
-            p.setAttribute('r', '5');
-            p.setAttribute('fill', 'var(--accent-green)');
-          }
-        });
+const list = document.getElementById('matchesList');
+const createBtn = document.getElementById('createBtn');
+const modal = document.getElementById('createModal');
+const amountDisplay = document.getElementById('amountValue');
+const keys = document.querySelectorAll('.key');
+const createMatchBtn = document.getElementById('createMatchBtn');
+const notif = document.getElementById('notif');
+const customSelects = document.querySelectorAll('.custom-select');
+const closeCreateModalBtn = document.getElementById('closeCreateModal');
+const bellBtn = document.getElementById('bellBtn');
+const notificationModal = document.getElementById('notificationModal');
+const closeNotificationModal = document.getElementById('closeNotificationModal');
+const notificationList = document.getElementById('notificationList');
+const fullMessageModal = document.getElementById('fullMessageModal');
+const fullMessageContent = document.getElementById('fullMessageContent');
+const backToNotifications = document.getElementById('backToNotifications');
+const profileBtn = document.getElementById('profileBtn');
+const profileModal = document.getElementById('profileModal');
+const closeProfileModal = document.getElementById('closeProfileModal');
+const copyCodeBtn = document.getElementById('copyCodeBtn');
+const statsChart = document.getElementById('statsChart');
+const chartCursor = document.getElementById('chartCursor');
+const chartTooltip = document.getElementById('chartTooltip');
+const statsList = document.getElementById('statsList');
+const acceptModal = document.getElementById('acceptModal');
+const closeAcceptModal = document.getElementById('closeAcceptModal');
+const confirmAcceptBtn = document.getElementById('confirmAcceptBtn');
+const connectCode = document.getElementById('connectCode');
+const timerDisplay = document.getElementById('timer');
+
+function drawChart() {
+  const chartWidth = 350;
+  const chartHeight = 150;
+  const padding = 20;
+  const dataWidth = chartWidth - padding * 2;
+  const dataHeight = chartHeight - padding * 2;
+  
+  const maxBalance = Math.max(...statsData.map(d => d.balance));
+  const minBalance = Math.min(...statsData.map(d => d.balance));
+  const balanceRange = maxBalance - minBalance;
+  
+  let pathData = '';
+  const points = [];
+  
+  statsData.forEach((data, index) => {
+    const x = padding + (index / (statsData.length - 1)) * dataWidth;
+    const y = padding + ((maxBalance - data.balance) / balanceRange) * dataHeight;
+    
+    points.push({ x, y, data });
+    
+    if (index === 0) {
+      pathData += `M ${x} ${y}`;
+    } else {
+      pathData += ` L ${x} ${y}`;
+    }
+  });
+  
+  statsChart.innerHTML = '';
+  
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+  gradient.setAttribute('id', 'chartGradient');
+  gradient.setAttribute('x1', '0%');
+  gradient.setAttribute('y1', '0%');
+  gradient.setAttribute('x2', '0%');
+  gradient.setAttribute('y2', '100%');
+  
+  const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+  stop1.setAttribute('offset', '0%');
+  stop1.setAttribute('style', 'stop-color:rgba(0,255,102,0.3);stop-opacity:1');
+  
+  const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+  stop2.setAttribute('offset', '100%');
+  stop2.setAttribute('style', 'stop-color:rgba(0,255,102,0);stop-opacity:0');
+  
+  gradient.appendChild(stop1);
+  gradient.appendChild(stop2);
+  defs.appendChild(gradient);
+  statsChart.appendChild(defs);
+  
+  const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  const areaData = pathData + ` L ${points[points.length - 1].x} ${chartHeight - padding} L ${padding} ${chartHeight - padding} Z`;
+  areaPath.setAttribute('d', areaData);
+  areaPath.setAttribute('fill', 'url(#chartGradient)');
+  statsChart.appendChild(areaPath);
+  
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  line.setAttribute('d', pathData);
+  line.setAttribute('class', 'chart-line');
+  statsChart.appendChild(line);
+  
+  points.forEach((point, index) => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', point.x);
+    circle.setAttribute('cy', point.y);
+    circle.setAttribute('r', 5);
+    circle.setAttribute('class', 'chart-point');
+    circle.setAttribute('data-index', index);
+    statsChart.appendChild(circle);
+  });
+  
+  let activePointIndex = -1;
+  
+  function showDataAtPoint(index) {
+    if (index < 0 || index >= points.length) return;
+    
+    const point = points[index];
+    const data = point.data;
+    
+    activePointIndex = index;
+    
+    chartCursor.style.left = `${(point.x / chartWidth) * 100}%`;
+    chartCursor.style.opacity = '1';
+    
+    chartTooltip.innerHTML = `
+      <div>${data.result === 'win' ? 'Победа' : 'Поражение'}</div>
+      <div>${data.amount > 0 ? '+' : ''}${data.amount} TON</div>
+      <div>Баланс: ${data.balance} TON</div>
+    `;
+    
+    const tooltipX = Math.min(Math.max((point.x / chartWidth) * 100, 10), 90);
+    chartTooltip.style.left = `${tooltipX}%`;
+    chartTooltip.style.top = `${Math.max((point.y / chartHeight) * 100 - 15, 5)}%`;
+    chartTooltip.style.opacity = '1';
+    
+    const allPoints = statsChart.querySelectorAll('.chart-point');
+    allPoints.forEach((p, i) => {
+      if (i === index) {
+        p.setAttribute('r', '7');
+        p.setAttribute('fill', '#fff');
+      } else {
+        p.setAttribute('r', '5');
+        p.setAttribute('fill', 'var(--accent-green)');
       }
-      
-      // Функция для скрытия данных
-      function hideData() {
-        activePointIndex = -1;
-        chartCursor.style.opacity = '0';
-        chartTooltip.style.opacity = '0';
-        
-        const allPoints = statsChart.querySelectorAll('.chart-point');
-        allPoints.forEach(p => {
-          p.setAttribute('r', '5');
-          p.setAttribute('fill', 'var(--accent-green)');
-        });
+    });
+  }
+  
+  function hideData() {
+    activePointIndex = -1;
+    chartCursor.style.opacity = '0';
+    chartTooltip.style.opacity = '0';
+    
+    const allPoints = statsChart.querySelectorAll('.chart-point');
+    allPoints.forEach(p => {
+      p.setAttribute('r', '5');
+      p.setAttribute('fill', 'var(--accent-green)');
+    });
+  }
+  
+  function findNearestPointIndex(mouseX) {
+    let nearestIndex = 0;
+    let minDistance = Math.abs(points[0].x - mouseX);
+    
+    for (let i = 1; i < points.length; i++) {
+      const distance = Math.abs(points[i].x - mouseX);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestIndex = i;
       }
-      
-      // Находим ближайшую точку по X координате
-      function findNearestPointIndex(mouseX) {
-        let nearestIndex = 0;
-        let minDistance = Math.abs(points[0].x - mouseX);
-        
-        for (let i = 1; i < points.length; i++) {
-          const distance = Math.abs(points[i].x - mouseX);
-          if (distance < minDistance) {
-            minDistance = distance;
-            nearestIndex = i;
-          }
-        }
-        
-        return nearestIndex;
-      }
-      
-      // Mouse events
-      statsChart.addEventListener('mousemove', (e) => {
-        const rect = statsChart.getBoundingClientRect();
-        const mouseX = ((e.clientX - rect.left) / rect.width) * chartWidth;
-        
-        const nearestIndex = findNearestPointIndex(mouseX);
-        
-        if (nearestIndex !== activePointIndex) {
-          showDataAtPoint(nearestIndex);
-        }
-      });
-      
-      statsChart.addEventListener('mouseleave', hideData);
-      
-      // Touch events for mobile
-      statsChart.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const touch = e.touches[0];
-        const rect = statsChart.getBoundingClientRect();
-        const touchX = ((touch.clientX - rect.left) / rect.width) * chartWidth;
-        
-        const nearestIndex = findNearestPointIndex(touchX);
-        showDataAtPoint(nearestIndex);
-      });
-      
-      statsChart.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        const touch = e.touches[0];
-        const rect = statsChart.getBoundingClientRect();
-        const touchX = ((touch.clientX - rect.left) / rect.width) * chartWidth;
-        
-        const nearestIndex = findNearestPointIndex(touchX);
-        
-        if (nearestIndex !== activePointIndex) {
-          showDataAtPoint(nearestIndex);
-        }
-      });
-      
-      statsChart.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        // На мобильных устройствах оставляем данные видимыми немного дольше
-        setTimeout(hideData, 3000);
-      });
-      
-      // Click на точки для дополнительного удобства
-      statsChart.addEventListener('click', (e) => {
-        const rect = statsChart.getBoundingClientRect();
-        const clickX = ((e.clientX - rect.left) / rect.width) * chartWidth;
-        
-        const nearestIndex = findNearestPointIndex(clickX);
-        showDataAtPoint(nearestIndex);
-      });
+    }
+    
+    return nearestIndex;
+  }
+  
+  statsChart.addEventListener('mousemove', (e) => {
+    const rect = statsChart.getBoundingClientRect();
+    const mouseX = ((e.clientX - rect.left) / rect.width) * chartWidth;
+    
+    const nearestIndex = findNearestPointIndex(mouseX);
+    
+    if (nearestIndex !== activePointIndex) {
+      showDataAtPoint(nearestIndex);
+    }
+  });
+  
+  statsChart.addEventListener('mouseleave', hideData);
+  
+  statsChart.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = statsChart.getBoundingClientRect();
+    const touchX = ((touch.clientX - rect.left) / rect.width) * chartWidth;
+    
+    const nearestIndex = findNearestPointIndex(touchX);
+    showDataAtPoint(nearestIndex);
+  });
+  
+  statsChart.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = statsChart.getBoundingClientRect();
+    const touchX = ((touch.clientX - rect.left) / rect.width) * chartWidth;
+    
+    const nearestIndex = findNearestPointIndex(touchX);
+    
+    if (nearestIndex !== activePointIndex) {
+      showDataAtPoint(nearestIndex);
+    }
+  });
+  
+  statsChart.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    setTimeout(hideData, 3000);
+  });
+  
+  statsChart.addEventListener('click', (e) => {
+    const rect = statsChart.getBoundingClientRect();
+    const clickX = ((e.clientX - rect.left) / rect.width) * chartWidth;
+    
+    const nearestIndex = findNearestPointIndex(clickX);
+    showDataAtPoint(nearestIndex);
+  });
+}
+
+function renderStatsList() {
+  statsList.innerHTML = '';
+  [...statsData].reverse().forEach(stat => {
+    const item = document.createElement('div');
+    item.className = `stats-item ${stat.result}`;
+    
+    item.innerHTML = `
+      <div class="stats-left">
+        <div class="stats-result ${stat.result}">
+          ${stat.result === 'win' ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ'}
+        </div>
+        <div class="stats-details">
+          ${stat.weapon} • ${stat.map}
+        </div>
+      </div>
+      <div class="stats-amount ${stat.result}">
+        ${stat.amount > 0 ? '+' : ''}${stat.amount} TON
+      </div>
+    `;
+    
+    statsList.appendChild(item);
+  });
+}
+
+function render() {
+  list.innerHTML = '';
+  sample.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="player-meta">
+        <img src="${s.avatar}" class="player-avatar" alt="Player avatar">
+        <div style="font-size:12px;color:var(--muted)">${s.player}</div>
+      </div>
+      <div class="crypto">
+        <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%" alt="TON logo">
+        <div>${s.stake}</div>
+      </div>
+      <div class="map">${s.map}</div>
+      <div class="weapon">${s.weapon}</div>
+      <div class="accept-wrap">
+        <button class="accept" data-id="${s.id}" data-avatar="${s.avatar}" data-player="${s.player}" data-map="${s.map}" data-weapon="${s.weapon}" data-stake="${s.stake}">ACCEPT</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function renderNotifications() {
+  notificationList.innerHTML = '';
+  notifications.forEach(notif => {
+    const item = document.createElement('div');
+    item.className = 'notification-item';
+    if (notif.type === 'match') {
+      item.className += ' match';
+      item.innerHTML = `
+        <div class="player-meta">
+          <img src="${notif.avatar}" class="avatar" alt="${notif.name}">
+          <div class="name">${notif.name}</div>
+        </div>
+        <div class="crypto">
+          <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%" alt="TON logo">
+          <div>${notif.stake}</div>
+        </div>
+        <div class="map">${notif.map}</div>
+        <div class="weapon">${notif.weapon}</div>
+        <div class="accept-wrap">
+          <button class="accept" data-id="${notif.id}" data-avatar="${notif.avatar}" data-player="${notif.name}" data-map="${notif.map}" data-weapon="${notif.weapon}" data-stake="${notif.stake}">Accept</button>
+        </div>
+      `;
+    } else {
+      item.innerHTML = `
+        <img src="${notif.avatar}" class="avatar" alt="${notif.name}">
+        <div>
+          <div>${notif.name}</div>
+          <div class="message" data-full="${notif.message}">${notif.shortMessage}</div>
+        </div>
+        <div></div>
+      `;
+    }
+    notificationList.appendChild(item);
+  });
+}
+
+document.addEventListener('click', e => {
+  if (e.target.matches('.accept')) {
+    console.log('Accept button clicked:', e.target);
+    const id = e.target.getAttribute('data-id');
+    const avatar = e.target.getAttribute('data-avatar');
+    const player = e.target.getAttribute('data-player');
+    const map = e.target.getAttribute('data-map');
+    const weapon = e.target.getAttribute('data-weapon');
+    const stake = e.target.getAttribute('data-stake');
+
+    console.log('Data extracted:', { id, avatar, player, map, weapon, stake });
+
+    // Проверка существования модального окна
+    if (!acceptModal) {
+      console.error('acceptModal not found in DOM');
+      return;
     }
 
-    function renderStatsList() {
-      statsList.innerHTML = '';
-      [...statsData].reverse().forEach(stat => {
-        const item = document.createElement('div');
-        item.className = `stats-item ${stat.result}`;
-        
-        item.innerHTML = `
-          <div class="stats-left">
-            <div class="stats-result ${stat.result}">
-              ${stat.result === 'win' ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ'}
-            </div>
-            <div class="stats-details">
-              ${stat.weapon} • ${stat.map}
-            </div>
-          </div>
-          <div class="stats-amount ${stat.result}">
-            ${stat.amount > 0 ? '+' : ''}${stat.amount} TON
-          </div>
-        `;
-        
-        statsList.appendChild(item);
+    // Показываем модальное окно
+    acceptModal.style.display = 'block';
+    console.log('acceptModal display set to block, current style:', acceptModal.style.display);
+
+    // Проверка существования элементов перед обновлением
+    const acceptAvatar = document.getElementById('acceptAvatar');
+    const acceptName = document.getElementById('acceptName');
+    const acceptMap = document.getElementById('acceptMap');
+    const acceptWeapon = document.getElementById('acceptWeapon');
+    const acceptStakeSpan = document.getElementById('acceptStake')?.querySelector('span');
+    const confirmAcceptBtn = document.getElementById('confirmAcceptBtn');
+    const connectCode = document.getElementById('connectCode');
+    const timer = document.getElementById('timer');
+
+    if (!acceptAvatar || !acceptName || !acceptMap || !acceptWeapon || !acceptStakeSpan || !confirmAcceptBtn || !connectCode || !timer) {
+      console.error('One or more modal elements not found:', {
+        acceptAvatar, acceptName, acceptMap, acceptWeapon, acceptStakeSpan, confirmAcceptBtn, connectCode, timer
       });
+      return;
     }
 
-    function render() {
-      list.innerHTML = '';
-      sample.forEach(s => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="player-meta">
-            <img src="assets/player.png" class="player-avatar" alt="Player avatar">
-            <div style="font-size:12px;color:var(--muted)">${s.player}</div>
-          </div>
-          <div class="crypto">
-            <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%" alt="TON logo">
-            <div>${s.stake}</div>
-          </div>
-          <div class="map">${s.map}</div>
-          <div class="weapon">${s.weapon}</div>
-          <div class="accept-wrap">
-            <button class="accept" data-id="${s.id}">ACCEPT</button>
-          </div>
-        `;
-        list.appendChild(card);
-      });
-    }
-    render();
+    // Сброс состояния модального окна
+    acceptAvatar.src = avatar || 'assets/player.png';
+    acceptName.textContent = player || 'Unknown';
+    acceptMap.textContent = map || '';
+    acceptWeapon.textContent = weapon || '';
+    acceptStakeSpan.textContent = stake || '0';
+    connectCode.style.display = 'none';
+    connectCode.textContent = '';
+    timer.style.display = 'none';
+    timer.textContent = '';
+    confirmAcceptBtn.textContent = 'ACCEPT';
+    confirmAcceptBtn.dataset.id = id;
+    confirmAcceptBtn.disabled = false;
+    confirmAcceptBtn.style.background = 'var(--accent-green)';
+    confirmAcceptBtn.style.color = '#000';
+    confirmAcceptBtn.style.cursor = 'pointer';
 
-    document.addEventListener('click', e => {
-      if (e.target.matches('.accept')) {
-        e.target.textContent = '✓ ACCEPTED';
-        e.target.disabled = true;
-        e.target.style.background = '#666';
+    // Сбрасываем состояние исходной кнопки
+    e.target.textContent = 'ACCEPT';
+    e.target.disabled = false;
+    e.target.style.background = 'var(--accent-green)';
+    e.target.style.color = '#000';
+    e.target.style.cursor = 'pointer';
+  }
+  customSelects.forEach(select => {
+    if (!select.contains(e.target) && e.target !== select) {
+      select.classList.remove('open');
+    }
+  });
+});
+
+closeAcceptModal.addEventListener('click', () => {
+  acceptModal.style.display = 'none';
+  clearInterval(window.acceptTimer);
+});
+
+acceptModal.addEventListener('click', (e) => {
+  if (e.target === acceptModal) {
+    acceptModal.style.display = 'none';
+    clearInterval(window.acceptTimer);
+  }
+});
+
+confirmAcceptBtn.addEventListener('click', (e) => {
+  console.log('Confirm Accept button clicked:', e.target.dataset.id);
+  const button = e.target;
+  const id = button.dataset.id;
+
+  if (button.textContent === 'ACCEPT') {
+    console.log('Processing ACCEPT for id:', id);
+    
+    // Показываем код подключения и таймер
+    connectCode.style.display = 'block';
+    connectCode.textContent = `connect server.cs2arena.com:${Math.floor(10000 + Math.random() * 90000)}`;
+    timerDisplay.style.display = 'block';
+
+    // Воспроизведение звука
+    const audio = new Audio('assets/accept.mp3');
+    audio.play().then(() => {
+      console.log('Audio played successfully');
+    }).catch(err => {
+      console.error('Audio play error:', err);
+    });
+
+    // Запускаем таймер
+    let timeLeft = 60;
+    timerDisplay.textContent = `Connect within: ${timeLeft}s`;
+    button.textContent = '✓ ACCEPTED';
+    button.disabled = true;
+    button.style.background = '#666';
+    button.style.color = '#fff';
+    button.style.cursor = 'default';
+
+    window.acceptTimer = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = `Connect within: ${timeLeft}s`;
+      if (timeLeft <= 0) {
+        clearInterval(window.acceptTimer);
+        acceptModal.style.display = 'none';
       }
-      customSelects.forEach(select => {
-        if (!select.contains(e.target) && e.target !== select) {
-          select.classList.remove('open');
-        }
-      });
-    });
+    }, 1000);
 
-    let count = 2;
-    createBtn.addEventListener('click', () => {
-      modal.style.display = 'block';
-    });
-
-    closeCreateModalBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
-
-    keys.forEach(key => {
-      key.addEventListener('click', () => {
-        const value = key.getAttribute('data-value');
-        if (value === 'delete') {
-          amountDisplay.textContent = amountDisplay.textContent.slice(0, -1) || '0';
-        } else if (amountDisplay.textContent === '0' && value !== '.') {
-          amountDisplay.textContent = value;
-        } else {
-          amountDisplay.textContent += value;
-        }
-      });
-    });
-
-    createMatchBtn.addEventListener('click', () => {
-      const map = document.getElementById('mapSelect').querySelector('.selected').textContent.trim().split(' ')[0];
-      const weapon = document.getElementById('weaponSelect').querySelector('.selected').textContent.trim().split(' ')[0];
-      const mode = document.getElementById('modeSelect').querySelector('.selected').textContent.trim().split(' ')[0];
-      const lobby = document.getElementById('lobbySelect').querySelector('.selected').textContent.trim().split(' ')[0];
-      const stake = parseFloat(amountDisplay.textContent) || 0;
-
-      sample.unshift({
-        id: Date.now(),
-        stake: stake,
-        map: map,
-        weapon: weapon,
-        player: `Player${sample.length + 1}`
-      });
+    // Удаляем матч из списка, если это матч
+    const matchIndex = sample.findIndex(s => s.id.toString() === id);
+    if (matchIndex !== -1) {
+      sample.splice(matchIndex, 1);
       render();
-      count++;
-      notif.textContent = count;
-      modal.style.display = 'none';
-    });
-
-    customSelects.forEach(select => {
-      select.addEventListener('click', (e) => {
-        e.stopPropagation();
-        customSelects.forEach(s => s.classList.remove('open'));
-        select.classList.toggle('open');
-      });
-
-      const options = select.querySelectorAll('.options div');
-      options.forEach(option => {
-        option.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const selected = select.querySelector('.selected');
-          selected.textContent = option.textContent + ' ▼';
-          select.classList.remove('open');
-        });
-      });
-    });
-
-    document.getElementById('codeInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        alert('Code entered: ' + e.target.value);
-      }
-    });
-
-    // Notification Data
-    const notifications = [
-      { type: 'match', avatar: 'assets/player.png', name: 'Friend1', map: 'Dust2', weapon: 'AK-47', stake: 1 },
-      { type: 'match', avatar: 'assets/player.png', name: 'Friend2', map: 'Inferno', weapon: 'M4A4', stake: 2 },
-      { 
-        type: 'message', 
-        avatar: 'assets/dev.png', 
-        name: 'Frag Arena Team', 
-        message: 'Приветствуем тебя в Frag Arena! Готов к захватывающим 1 на 1 сражениям и настоящему драйву? Вноси депозит, получай уникальный код для подключения к матчу в CS2 и докажи, кто тут настоящий чемпион! Удачи и побед! 💥🎮',
-        shortMessage: 'Приветствуем тебя в Frag Arena! Готов к сражениям?...' 
-      }
-    ];
-
-    function renderNotifications() {
-      notificationList.innerHTML = '';
-      notifications.forEach(notif => {
-        const item = document.createElement('div');
-        item.className = 'notification-item';
-        if (notif.type === 'match') {
-          item.className += ' match';
-          item.innerHTML = `
-            <div class="player-meta">
-              <img src="${notif.avatar}" class="avatar" alt="${notif.name}">
-              <div class="name">${notif.name}</div>
-            </div>
-            <div class="crypto">
-              <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%" alt="TON logo">
-              <div>${notif.stake}</div>
-            </div>
-            <div class="map">${notif.map}</div>
-            <div class="weapon">${notif.weapon}</div>
-            <div class="accept-wrap">
-              <button class="accept" data-id="${notif.name}">Accept</button>
-            </div>
-          `;
-        } else {
-          item.innerHTML = `
-            <img src="${notif.avatar}" class="avatar" alt="${notif.name}">
-            <div>
-              <div>${notif.name}</div>
-              <div class="message" data-full="${notif.message}">${notif.shortMessage}</div>
-              <div class="full-message" style="display:none;">${notif.message}</div>
-            </div>
-            <div></div>
-          `;
-        }
-        notificationList.appendChild(item);
-      });
     }
 
-    bellBtn.addEventListener('click', () => {
-      notificationModal.style.display = 'block';
+    // Удаляем уведомление, если это уведомление
+    const notifIndex = notifications.findIndex(n => n.id === id && n.type === 'match');
+    if (notifIndex !== -1) {
+      notifications.splice(notifIndex, 1);
+      notif.textContent = notifications.filter(n => n.type === 'match').length;
       renderNotifications();
-    });
+    }
+  }
+});
 
-    closeNotificationModal.addEventListener('click', () => {
-      notificationModal.style.display = 'none';
-      fullMessageModal.style.display = 'none';
-    });
+createBtn.addEventListener('click', () => {
+  modal.style.display = 'block';
+});
 
-    notificationList.addEventListener('click', (e) => {
-      if (e.target.classList.contains('message')) {
-        const fullMessage = e.target.getAttribute('data-full');
-        fullMessageContent.innerHTML = `<div>${fullMessage}</div>`;
-        notificationModal.style.display = 'none';
-        fullMessageModal.style.display = 'block';
-      }
-    });
+closeCreateModalBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
 
-    backToNotifications.addEventListener('click', () => {
-      fullMessageModal.style.display = 'none';
-      notificationModal.style.display = 'block';
-      renderNotifications();
-    });
+keys.forEach(key => {
+  key.addEventListener('click', () => {
+    const value = key.getAttribute('data-value');
+    if (value === 'delete') {
+      amountDisplay.textContent = amountDisplay.textContent.slice(0, -1) || '0';
+    } else if (amountDisplay.textContent === '0' && value !== '.') {
+      amountDisplay.textContent = value;
+    } else {
+      amountDisplay.textContent += value;
+    }
+  });
+});
 
-    notificationList.addEventListener('click', (e) => {
-      if (e.target.classList.contains('accept')) {
-        e.target.textContent = '✓ ACCEPTED';
-        e.target.disabled = true;
-        e.target.style.background = '#666';
-      }
-    });
+createMatchBtn.addEventListener('click', () => {
+  const map = document.getElementById('mapSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+  const weapon = document.getElementById('weaponSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+  const stake = parseFloat(amountDisplay.textContent) || 0;
 
-    // Profile Modal Event Listeners
-    profileBtn.addEventListener('click', () => {
-      profileModal.style.display = 'block';
-      drawChart();
-      renderStatsList();
-    });
+  sample.unshift({
+    id: Date.now(),
+    stake: stake,
+    map: map,
+    weapon: weapon,
+    player: `Player${sample.length + 1}`,
+    avatar: 'assets/player.png'
+  });
+  render();
+  modal.style.display = 'none';
+});
 
-    closeProfileModal.addEventListener('click', () => {
-      profileModal.style.display = 'none';
-    });
+customSelects.forEach(select => {
+  select.addEventListener('click', (e) => {
+    e.stopPropagation();
+    customSelects.forEach(s => s.classList.remove('open'));
+    select.classList.toggle('open');
+  });
 
-    copyCodeBtn.addEventListener('click', () => {
-      const userCode = 'PLAYER123_CODE';
-      navigator.clipboard.writeText(userCode).then(() => {
-        copyCodeBtn.textContent = 'Copied!';
-        copyCodeBtn.style.background = '#00ff66';
-        copyCodeBtn.style.color = '#000';
-        setTimeout(() => {
-          copyCodeBtn.textContent = 'Copy my code';
-          copyCodeBtn.style.background = '#1677ff';
-          copyCodeBtn.style.color = '#fff';
-        }, 2000);
-      }).catch(() => {
-        alert('Code: ' + userCode);
-      });
+  const options = select.querySelectorAll('.options div');
+  options.forEach(option => {
+    option.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const selected = select.querySelector('.selected');
+      selected.textContent = option.textContent + ' ▼';
+      select.classList.remove('open');
     });
-    // Инициализация текущей страницы
+  });
+});
+
+document.getElementById('codeInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    alert('Code entered: ' + e.target.value);
+  }
+});
+
+bellBtn.addEventListener('click', () => {
+  notificationModal.style.display = 'block';
+  renderNotifications();
+});
+
+closeNotificationModal.addEventListener('click', () => {
+  notificationModal.style.display = 'none';
+  fullMessageModal.style.display = 'none';
+});
+
+notificationList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('message')) {
+    const fullMessage = e.target.getAttribute('data-full');
+    fullMessageContent.innerHTML = `<div>${fullMessage}</div>`;
+    notificationModal.style.display = 'none';
+    fullMessageModal.style.display = 'block';
+  }
+});
+
+backToNotifications.addEventListener('click', () => {
+  fullMessageModal.style.display = 'none';
+  notificationModal.style.display = 'block';
+  renderNotifications();
+});
+
+profileBtn.addEventListener('click', () => {
+  profileModal.style.display = 'block';
+  drawChart();
+  renderStatsList();
+});
+
+closeProfileModal.addEventListener('click', () => {
+  profileModal.style.display = 'none';
+});
+
+copyCodeBtn.addEventListener('click', () => {
+  const userCode = 'PLAYER123_CODE';
+  navigator.clipboard.writeText(userCode).then(() => {
+    copyCodeBtn.textContent = 'Copied!';
+    copyCodeBtn.style.background = '#00ff66';
+    copyCodeBtn.style.color = '#000';
+    setTimeout(() => {
+      copyCodeBtn.textContent = 'Copy my code';
+      copyCodeBtn.style.background = '#1677ff';
+      copyCodeBtn.style.color = '#fff';
+    }, 2000);
+  }).catch(() => {
+    alert('Code: ' + userCode);
+  });
+});
+
 let currentPage = 'home';
 
-// Функция для переключения страниц
 function navigateTo(page) {
-  if (page === currentPage) return; // Ничего не делаем, если уже на этой странице
+  if (page === currentPage) return;
 
-  // Удаляем классы активности
   document.querySelectorAll('.nav-item').forEach(item => {
     item.classList.remove('active');
     item.classList.add('inactive');
   });
 
-  // Устанавливаем активный класс для выбранной вкладки
   const activeItem = document.querySelector(`.nav-item[data-page="${page}"]`);
   activeItem.classList.remove('inactive');
   activeItem.classList.add('active');
 
-  // Переход на новую страницу
   if (page === 'friends') {
     window.location.href = 'friends.html';
   } else if (page === 'withdraw') {
@@ -1468,7 +1710,6 @@ function navigateTo(page) {
   currentPage = page;
 }
 
-// Установка начальной активной вкладки (Home)
 document.querySelector(`.nav-item[data-page="${currentPage}"]`).classList.add('active');
 document.querySelectorAll('.nav-item').forEach(item => {
   if (item.getAttribute('data-page') !== currentPage) {
@@ -1476,13 +1717,17 @@ document.querySelectorAll('.nav-item').forEach(item => {
   }
 });
 
-// Обработчик кликов по навигации
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     const page = item.getAttribute('data-page');
     navigateTo(page);
   });
 });
-  </script>
+
+// Инициализация при загрузке страницы
+render();
+renderNotifications();
+notif.textContent = notifications.filter(n => n.type === 'match').length;
+</script>
 </body>
 </html>
