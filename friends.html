@@ -25,15 +25,17 @@
       overflow: hidden;
       touch-action: auto; /* Изменено для лучшей прокрутки на мобильных */
     }
-    .device {
-      max-width: 420px;
-      margin: 0 auto;
-      border-left: 1px solid #111;
-      border-right: 1px solid #111;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+   .device {
+  max-width: 420px;
+  margin: 0 auto;
+  border-left: 1px solid #111;
+  border-right: 1px solid #111;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px; /* Увеличиваем отступ снизу, чтобы учесть поднятие nav */
+  box-sizing: border-box;
+}
 
     /* Header */
     header {
