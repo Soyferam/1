@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Frag Arena — UI mock</title>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --red-900: #8b0000;
+      --red-700: #c72b2b;
+      --accent-green: #00ff66;
+      --muted: #8e8e8e;
+      --card: #0f0f10;
+      --pill: #2f2f30;
+      --blue: #1677ff;
+      --ton: #12b0ff;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: #fff;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+    .device {
+      max-width: 420px;
+      margin: 0 auto;
+      border-left: 1px solid #111;
+      border-right: 1px solid #111;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #060606 0%, rgba(0,0,0,0.2) 100%);
+    }
+    .left-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .profile {
+      border: 2px solid #333;
+      padding: 4px;
+    }
+    .bell {
+      position: relative;
+      padding: 6px;
+    }
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: #ff2b2b;
+      color: #fff;
+      border-radius: 50%;
+      min-width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .deposit {
+      background: var(--accent-green);
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 22px;
+      font-weight: 700;
+    }
+
+    /* Top red hero */
+    .hero {
+      background: linear-gradient(180deg, var(--red-900), var(--red-700));
+      padding: 18px 16px;
+      border-bottom-left-radius: 22px;
+      border-bottom-right-radius: 22px;
+    }
+    .logo-carousel {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      overflow: hidden;
+      padding: 6px 0;
+      margin-bottom: 6px;
+    }
+    .logo-track {
+      display: flex;
+      gap: 18px;
+      animation: scroll 18s linear infinite;
+    }
+    .logo img {
+      width: 48px;
+      height: auto;
+      border-radius: 6px;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: 800;
+      text-align: center;
+      margin: 6px 0;
+    }
+    .search-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .search {
+      width: 92%;
+      max-width: 360px;
+      background: rgba(0,0,0,0.6);
+      padding: 12px 16px;
+      border-radius: 24px;
+      border: 3px solid #222;
+      color: #fff;
+      font-weight: 600;
+    }
+    .create {
+      background: var(--blue);
+      padding: 10px 18px;
+      border-radius: 28px;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* List - ИСПРАВЛЕНО */
+    .list-header {
+      display: grid;
+      grid-template-columns: 75px 60px 75px 70px 100px;
+      padding: 10px 14px;
+      color: var(--muted);
+      font-weight: 700;
+      align-items: center;
+      gap: 3px;
+    }
+    .list {
+      flex: 1;
+      overflow: auto;
+      padding: 10px 10px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 26px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 75px 60px 75px 70px 100px;
+      align-items: center;
+      gap: 3px;
+      margin-bottom: 12px;
+      border: 6px solid #2a2a2a;
+    }
+    .player-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .player-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      align-items: center;
+    }
+    .crypto {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 5px;
+      background: #0a1a22;
+      border-radius: 10px;
+      font-weight: 700;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .map {
+      font-weight: 800;
+      text-align: center;
+      font-size: 12px;
+      word-break: break-word;
+    }
+    .weapon {
+      font-weight: 700;
+      text-align: center;
+      font-size: 12px;
+      word-break: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .accept-wrap {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .accept {
+      background: var(--accent-green);
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 18px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* Bottom nav */
+    nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 8px;
+      background: linear-gradient(180deg, #080808, #000);
+      align-items: center;
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+    }
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      border: 6px solid #2a2a2a;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .modal-label {
+      font-weight: 600;
+      min-width: 80px;
+    }
+    .custom-select {
+      position: relative;
+      width: 200px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 3px solid #222;
+      border-radius: 10px;
+      padding: 5px 10px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .custom-select .selected {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .custom-select .options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border: 3px solid #222;
+      border-radius: 10px;
+      max-height: 200px; /* Убедимся, что высота достаточна */
+      overflow-y: auto; /* Включаем прокрутку */
+      z-index: 10;
+    }
+    .custom-select .options div {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .custom-select .options div:hover {
+      background: #333;
+    }
+    .custom-select.open .options {
+      display: block;
+    }
+    .modal-amount {
+      background: rgba(0, 0, 0, 0.6);
+      border: 3px solid #222;
+      border-radius: 10px;
+      padding: 5px 10px;
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      width: 200px;
+    }
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .key {
+      background: var(--pill);
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .key.delete {
+      background: #ff2b2b;
+    }
+    .create-btn {
+      background: var(--blue);
+      padding: 10px 20px;
+      border-radius: 28px;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+
+    @media (max-width: 420px) {
+      .title { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="device" role="application">
+    <header>
+      <div class="left-row">
+        <div class="icon profile" aria-hidden="true">
+          <img src="assets/user.png" width="18" height="18" alt="Profile">
+        </div>
+        <div class="bell" aria-hidden="true">
+          <img src="assets/bell.png" width="22" height="22" alt="Notifications">
+          <div class="badge" id="notif">1</div>
+        </div>
+      </div>
+      <button class="deposit">Deposit</button>
+    </header>
+
+    <section class="hero">
+      <div class="logo-carousel">
+        <div class="logo-track" id="logoTrack">
+          <div class="logo"><img src="assets/1.png" alt="Team 1"></div>
+          <div class="logo"><img src="assets/2.png" alt="Team 2"></div>
+          <div class="logo"><img src="assets/3.png" alt="Team 3"></div>
+          <div class="logo"><img src="assets/4.png" alt="Team 4"></div>
+          <div class="logo"><img src="assets/5.png" alt="Team 5"></div>
+          <div class="logo"><img src="assets/6.png" alt="Team 6"></div>
+          <div class="logo"><img src="assets/7.png" alt="Team 7"></div>
+          <div class="logo"><img src="assets/8.png" alt="Team 8"></div>
+          <!-- Дублируем для бесшовной прокрутки -->
+          <div class="logo"><img src="assets/1.png" alt="Team 1"></div>
+          <div class="logo"><img src="assets/2.png" alt="Team 2"></div>
+          <div class="logo"><img src="assets/3.png" alt="Team 3"></div>
+          <div class="logo"><img src="assets/4.png" alt="Team 4"></div>
+          <div class="logo"><img src="assets/5.png" alt="Team 5"></div>
+          <div class="logo"><img src="assets/6.png" alt="Team 6"></div>
+          <div class="logo"><img src="assets/7.png" alt="Team 7"></div>
+          <div class="logo"><img src="assets/8.png" alt="Team 8"></div>
+        </div>
+      </div>
+
+      <div class="title">Frag Arena</div>
+
+      <div class="search-wrap">
+        <input id="codeInput" class="search" placeholder="Enter match or friends code" />
+        <button class="create" id="createBtn">Create match</button>
+      </div>
+    </section>
+
+    <div style="padding:10px 12px 0 12px">
+      <div class="list-header">
+        <div style="text-align:center">PLAYER</div>
+        <div style="text-align:center">CRYPTO</div>
+        <div style="text-align:center">MAP</div>
+        <div style="text-align:center">WEAPON</div>
+        <div style="text-align:center"></div>
+      </div>
+    </div>
+
+    <main class="list" id="matchesList"></main>
+
+    <nav>
+      <div class="nav-item">
+        <img src="assets/home.png" width="26" height="26" alt="Home">
+      </div>
+      <div class="nav-item">
+        <img src="assets/friends.png" width="26" height="26" alt="Friends">
+      </div>
+      <div class="nav-item">
+        <img src="assets/money.png" width="26" height="26" alt="Money">
+      </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal" id="createModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>BALANCE: 0 TON</div>
+          <button class="deposit">Deposit</button>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">MAP</div>
+          <div class="custom-select" id="mapSelect">
+            <div class="selected">Dust2 <span>▼</span></div>
+            <div class="options">
+              <div data-value="Dust2">Dust2</div>
+              <div data-value="Mirage">Mirage</div>
+              <div data-value="Inferno">Inferno</div>
+              <div data-value="Nuke">Nuke</div>
+              <div data-value="Cache">Cache</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">WEAPON</div>
+          <div class="custom-select" id="weaponSelect">
+            <div class="selected">AK-47 <span>▼</span></div>
+            <div class="options">
+              <div data-value="AK-47">AK-47</div>
+              <div data-value="M4A4">M4A4</div>
+              <div data-value="M4A1-S">M4A1-S</div>
+              <div data-value="AWP">AWP</div>
+              <div data-value="Desert Eagle">Desert Eagle</div>
+              <div data-value="USP-S">USP-S</div>
+              <div data-value="Glock-18">Glock-18</div>
+              <div data-value="P250">P250</div>
+              <div data-value="Tec-9">Tec-9</div>
+              <div data-value="FAMAS">FAMAS</div>
+              <div data-value="Galil AR">Galil AR</div>
+              <div data-value="SSG 08">SSG 08</div>
+              <div data-value="SCAR-20">SCAR-20</div>
+              <div data-value="AUG">AUG</div>
+              <div data-value="SG 553">SG 553</div>
+              <div data-value="MP9">MP9</div>
+              <div data-value="MAC-10">MAC-10</div>
+              <div data-value="UMP-45">UMP-45</div>
+              <div data-value="P90">P90</div>
+              <div data-value="PP-Bizon">PP-Bizon</div>
+              <div data-value="MP7">MP7</div>
+              <div data-value="XM1014">XM1014</div>
+              <div data-value="MAG-7">MAG-7</div>
+              <div data-value="Sawed-Off">Sawed-Off</div>
+              <div data-value="Nova">Nova</div>
+              <div data-value="Negev">Negev</div>
+              <div data-value="M249">M249</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">MODE</div>
+          <div class="custom-select" id="modeSelect">
+            <div class="selected">1v1 <span>▼</span></div>
+            <div class="options">
+              <div data-value="1v1">1v1</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">LOBBY</div>
+          <div class="custom-select" id="lobbySelect">
+            <div class="selected">Public <span>▼</span></div>
+            <div class="options">
+              <div data-value="public">Public</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">AMOUNT OF TON</div>
+          <div class="modal-amount" id="amountDisplay">0</div>
+        </div>
+        <div class="keyboard">
+          <button class="key" data-value="1">1</button>
+          <button class="key" data-value="2">2</button>
+          <button class="key" data-value="3">3</button>
+          <button class="key" data-value="4">4</button>
+          <button class="key" data-value="5">5</button>
+          <button class="key" data-value="6">6</button>
+          <button class="key" data-value="7">7</button>
+          <button class="key" data-value="8">8</button>
+          <button class="key" data-value="9">9</button>
+          <button class="key" data-value=".">.</button>
+          <button class="key" data-value="0">0</button>
+          <button class="key delete" data-value="delete">⌫</button>
+        </div>
+        <button class="create-btn" id="createMatchBtn">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sample = [
+      {id: 1, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player1'},
+      {id: 2, stake: 2, map: 'Inferno', weapon: 'M4A4', player: 'Player2'},
+      {id: 3, stake: 1, map: 'Nuke', weapon: 'AWP', player: 'Player3'},
+      {id: 4, stake: 5, map: 'Dust2', weapon: 'AK-47', player: 'Player4'},
+      {id: 5, stake: 1, map: 'Mirage', weapon: 'Desert Eagle', player: 'Player5'},
+      {id: 6, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player6'},
+      {id: 7, stake: 7, map: 'Overpass', weapon: 'AK-47', player: 'Player7'},
+      {id: 8, stake: 3, map: 'Dust2', weapon: 'M4A1', player: 'Player8'},
+    ];
+
+    const list = document.getElementById('matchesList');
+    const createBtn = document.getElementById('createBtn');
+    const modal = document.getElementById('createModal');
+    const amountDisplay = document.getElementById('amountDisplay');
+    const keys = document.querySelectorAll('.key');
+    const createMatchBtn = document.getElementById('createMatchBtn');
+    const notif = document.getElementById('notif');
+    const customSelects = document.querySelectorAll('.custom-select');
+
+    function render() {
+      list.innerHTML = '';
+      sample.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="player-meta">
+            <img src="assets/player.png" class="player-avatar" alt="Player avatar">
+            <div style="font-size:12px;color:var(--muted)">${s.player}</div>
+          </div>
+          <div class="crypto">
+            <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%" alt="TON logo">
+            <div>${s.stake}</div>
+          </div>
+          <div class="map">${s.map}</div>
+          <div class="weapon">${s.weapon}</div>
+          <div class="accept-wrap">
+            <button class="accept" data-id="${s.id}">ACCEPT</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+    render();
+
+    document.addEventListener('click', e => {
+      if (e.target.matches('.accept')) {
+        e.target.textContent = '✓ ACCEPTED';
+        e.target.disabled = true;
+        e.target.style.background = '#666';
+      }
+    });
+
+    let count = 1;
+    createBtn.addEventListener('click', () => {
+      modal.style.display = 'block';
+    });
+
+    keys.forEach(key => {
+      key.addEventListener('click', () => {
+        const value = key.getAttribute('data-value');
+        if (value === 'delete') {
+          amountDisplay.textContent = amountDisplay.textContent.slice(0, -1) || '0';
+        } else if (amountDisplay.textContent === '0' && value !== '.') {
+          amountDisplay.textContent = value;
+        } else {
+          amountDisplay.textContent += value;
+        }
+      });
+    });
+
+    createMatchBtn.addEventListener('click', () => {
+      const map = document.getElementById('mapSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+      const weapon = document.getElementById('weaponSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+      const mode = document.getElementById('modeSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+      const lobby = document.getElementById('lobbySelect').querySelector('.selected').textContent.trim().split(' ')[0];
+      const stake = parseFloat(amountDisplay.textContent) || 0;
+
+      sample.unshift({
+        id: Date.now(),
+        stake: stake,
+        map: map,
+        weapon: weapon,
+        player: `Player${sample.length + 1}`
+      });
+      render();
+      count++;
+      notif.textContent = count;
+      modal.style.display = 'none';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!modal.contains(e.target) && e.target !== createBtn) {
+        modal.style.display = 'none';
+      }
+      customSelects.forEach(select => {
+        if (!select.contains(e.target)) {
+          select.classList.remove('open');
+        }
+      });
+    });
+
+    customSelects.forEach(select => {
+      select.addEventListener('click', (e) => {
+        e.stopPropagation();
+        select.classList.toggle('open');
+      });
+
+      const options = select.querySelectorAll('.options div');
+      options.forEach(option => {
+        option.addEventListener('click', () => {
+          const selected = select.querySelector('.selected');
+          selected.textContent = option.textContent + ' ▼';
+          select.classList.remove('open'); // Закрываем список после выбора
+        });
+      });
+    });
+
+    document.getElementById('codeInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        alert('Code entered: ' + e.target.value);
+      }
+    });
+  </script>
+</body>
+</html>
