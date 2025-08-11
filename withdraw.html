@@ -19,14 +19,16 @@
       touch-action: manipulation;
     }
     .device {
-      max-width: 420px;
-      margin: 0 auto;
-      border-left: 1px solid #111;
-      border-right: 1px solid #111;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+  max-width: 420px;
+  margin: 0 auto;
+  border-left: 1px solid #111;
+  border-right: 1px solid #111;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px; /* Увеличиваем отступ снизу, чтобы учесть поднятие nav */
+  box-sizing: border-box;
+}
     main {
       flex-grow: 1; /* Растягивает содержимое, чтобы вытолкнуть nav вниз */
       display: flex;
@@ -34,15 +36,16 @@
       align-items: center;
     }
     nav {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 8px;
-      background: linear-gradient(180deg, #080808, #000);
-      align-items: center;
-      position: sticky;
-      bottom: 0;
-      z-index: 100;
-    }
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 8px;
+  background: linear-gradient(180deg, #080808, #000);
+  align-items: center;
+  position: sticky;
+  bottom: 20px; /* Изменено с 0 на 20px */
+  z-index: 100;
+  margin-bottom: 20px; /* Добавляем отступ снизу, чтобы контент не перекрывался */
+}
     .nav-item {
       display: flex;
       flex-direction: column;
