@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Friends - Frag Arena</title>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --red-900: #8b0000;
+      --red-700: #c72b2b;
+      --accent-green: #00ff66;
+      --muted: #8e8e8e;
+      --card: #0f0f10;
+      --pill: #2f2f30;
+      --blue: #1677ff;
+      --ton: #12b0ff;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: #fff;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+    .device {
+      max-width: 420px;
+      margin: 0 auto;
+      border-left: 1px solid #111;
+      border-right: 1px solid #111;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #060606 0%, rgba(0,0,0,0.2) 100%);
+    }
+    .left-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .profile {
+      border: 2px solid #333;
+      padding: 4px;
+      cursor: pointer;
+    }
+    .bell {
+      position: relative;
+      padding: 6px;
+      cursor: pointer;
+    }
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: #ff2b2b;
+      color: #fff;
+      border-radius: 50%;
+      min-width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .deposit {
+      background: var(--accent-green);
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 22px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Top red hero */
+    .hero {
+      background: linear-gradient(180deg, var(--red-900), var(--red-700));
+      padding: 18px 16px;
+      border-bottom-left-radius: 22px;
+      border-bottom-right-radius: 22px;
+    }
+    .logo-carousel {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      overflow: hidden;
+      padding: 6px 0;
+      margin-bottom: 6px;
+      width: 100%;
+    }
+    .logo-track {
+      display: flex;
+      gap: 18px;
+      animation: scroll 18s linear infinite;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      overflow: hidden;
+      border-radius: 50%;
+      position: relative;
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .title {
+      font-size: 36px;
+      font-weight: 800;
+      text-align: center;
+      margin: 6px 0;
+    }
+    .search-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .search {
+      width: 92%;
+      max-width: 360px;
+      background: rgba(0,0,0,0.6);
+      padding: 12px 16px;
+      border-radius: 24px;
+      border: 3px solid #222;
+      color: #fff;
+      font-weight: 600;
+    }
+    .create {
+      background: var(--blue);
+      padding: 10px 18px;
+      border-radius: 28px;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      width: 92%;
+      max-width: 360px;
+    }
+
+    /* Friends List Section */
+    .friends-section {
+      padding: 10px 12px 0 12px;
+      flex: 1;
+      overflow: hidden;
+    }
+    .list-header {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 10px 14px;
+      color: var(--muted);
+      font-weight: 700;
+      align-items: center;
+      text-align: center;
+    }
+    .friends-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .friends-list::-webkit-scrollbar {
+      display: none;
+    }
+    .friend-item {
+      background: var(--card);
+      border-radius: 26px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 6px solid #2a2a2a;
+      margin-bottom: 12px;
+    }
+    .friend-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .friend-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .friend-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .friend-kd {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .duel-btn {
+      background: var(--accent-green);
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 18px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* Bottom nav */
+    nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 8px;
+      background: linear-gradient(180deg, #080808, #000);
+      align-items: center;
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .nav-item img {
+      filter: grayscale(100%);
+      transition: filter 0.3s;
+    }
+    .nav-item.active img {
+      filter: grayscale(0%);
+    }
+    .nav-item.inactive img {
+      filter: grayscale(100%);
+    }
+    .nav-item.active {
+      color: #fff;
+    }
+    .nav-item.inactive {
+      color: var(--muted);
+    }
+
+    /* Modal Styles (Welcome Modal) */
+    #welcomeModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+      position: relative;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .modal-carousel {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 20px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .modal-track {
+      display: flex;
+      gap: 16px;
+      min-width: max-content;
+      animation: scroll 20s linear infinite;
+    }
+    .modal-logo {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      padding-bottom: 6px;
+    }
+    .modal-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .modal-status-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      position: absolute;
+      right: -5px;
+      bottom: 0;
+      border: 2px solid var(--card);
+      z-index: 1;
+    }
+    .modal-text {
+      font-size: 16px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-100% / 2)); }
+    }
+    .modal-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* Create Duel Modal */
+    #createModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+    }
+    #createModal .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 6px solid #2a2a2a;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 30px;
+      text-align: center;
+      padding: 2px;
+    }
+    .modal-close:hover {
+      color: var(--accent-green);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+    .modal-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .modal-label {
+      font-weight: 600;
+      min-width: 80px;
+    }
+    .custom-select {
+      position: relative;
+      width: 200px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 3px solid #222;
+      border-radius: 10px;
+      padding: 5px 10px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .custom-select .selected {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .custom-select .options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border: 3px solid #222;
+      border-radius: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 10;
+    }
+    .custom-select .options div {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .custom-select .options div:hover {
+      background: #333;
+    }
+    .custom-select.open .options {
+      display: block;
+    }
+    .modal-amount {
+      background: rgba(0, 0, 0, 0.6);
+      border: 3px solid #222;
+      border-radius: 10px;
+      padding: 5px 10px;
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+      width: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-amount img {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .key {
+      background: var(--pill);
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .key.delete {
+      background: #ff2b2b;
+    }
+    .create-btn {
+      background: var(--blue);
+      padding: 10px 20px;
+      border-radius: 28px;
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="device">
+    <header>
+      <div class="left-row">
+        <div class="icon profile" id="profileBtn" aria-hidden="true">
+          <img src="assets/user.png" width="18" height="18" alt="Profile">
+        </div>
+        <div class="bell" id="bellBtn" aria-hidden="true">
+          <img src="assets/bell.png" width="22" height="22" alt="Notifications">
+          <div class="badge" id="notif">0</div>
+        </div>
+      </div>
+      <button class="deposit">Deposit</button>
+    </header>
+    <section class="hero">
+      <div class="logo-carousel">
+        <div class="logo-track" id="logoTrack">
+          <div class="logo"><img src="assets2/friend1.png" alt="Friend 1"></div>
+          <div class="logo"><img src="assets2/friend2.png" alt="Friend 2"></div>
+          <div class="logo"><img src="assets2/friend3.png" alt="Friend 3"></div>
+          <div class="logo"><img src="assets2/friend4.png" alt="Friend 4"></div>
+          <div class="logo"><img src="assets2/friend5.png" alt="Friend 5"></div>
+          <div class="logo"><img src="assets2/friend6.png" alt="Friend 6"></div>
+          <div class="logo"><img src="assets2/friend7.png" alt="Friend 7"></div>
+          <div class="logo"><img src="assets2/friend8.png" alt="Friend 8"></div>
+          <div class="logo"><img src="assets2/friend1.png" alt="Friend 1"></div>
+          <div class="logo"><img src="assets2/friend2.png" alt="Friend 2"></div>
+          <div class="logo"><img src="assets2/friend3.png" alt="Friend 3"></div>
+          <div class="logo"><img src="assets2/friend4.png" alt="Friend 4"></div>
+          <div class="logo"><img src="assets2/friend5.png" alt="Friend 5"></div>
+          <div class="logo"><img src="assets2/friend6.png" alt="Friend 6"></div>
+          <div class="logo"><img src="assets2/friend7.png" alt="Friend 7"></div>
+          <div class="logo"><img src="assets2/friend8.png" alt="Friend 8"></div>
+        </div>
+      </div>
+      <div class="title">Frag Arena</div>
+      <div class="search-wrap">
+        <input id="codeInput" class="search" placeholder="Enter friends code" />
+        <button id="copyCodeBtn" class="create">Copy my code</button>
+      </div>
+    </section>
+    <div class="friends-section">
+      <div class="list-header">FRIENDS</div>
+      <div class="friends-list" id="friendsList">
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 1">
+          <div class="friend-info">
+            <div class="friend-name">PlayerX7</div>
+            <div class="friend-kd">K/D: 1.45</div>
+          </div>
+          <button class="duel-btn" data-friend="PlayerX7">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 2">
+          <div class="friend-info">
+            <div class="friend-name">ShadowKiller</div>
+            <div class="friend-kd">K/D: 0.89</div>
+          </div>
+          <button class="duel-btn" data-friend="ShadowKiller">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 3">
+          <div class="friend-info">
+            <div class="friend-name">AceOfSpades</div>
+            <div class="friend-kd">K/D: 2.10</div>
+          </div>
+          <button class="duel-btn" data-friend="AceOfSpades">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 4">
+          <div class="friend-info">
+            <div class="friend-name">SilentSniper</div>
+            <div class="friend-kd">K/D: 1.75</div>
+          </div>
+          <button class="duel-btn" data-friend="SilentSniper">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 5">
+          <div class="friend-info">
+            <div class="friend-name">BlazeMaster</div>
+            <div class="friend-kd">K/D: 1.20</div>
+          </div>
+          <button class="duel-btn" data-friend="BlazeMaster">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 6">
+          <div class="friend-info">
+            <div class="friend-name">DarkKnight</div>
+            <div class="friend-kd">K/D: 1.30</div>
+          </div>
+          <button class="duel-btn" data-friend="DarkKnight">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 7">
+          <div class="friend-info">
+            <div class="friend-name">GhostRider</div>
+            <div class="friend-kd">K/D: 0.95</div>
+          </div>
+          <button class="duel-btn" data-friend="GhostRider">Duel</button>
+        </div>
+        <div class="friend-item">
+          <img src="assets/player.png" class="friend-avatar" alt="Friend 8">
+          <div class="friend-info">
+            <div class="friend-name">IronWolf</div>
+            <div class="friend-kd">K/D: 1.85</div>
+          </div>
+          <button class="duel-btn" data-friend="IronWolf">Duel</button>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <div class="nav-item" data-page="home">
+        <img src="assets/home.png" width="26" height="26" alt="Home">
+      </div>
+      <div class="nav-item" data-page="friends">
+        <img src="assets/friends.png" width="26" height="26" alt="Friends">
+      </div>
+      <div class="nav-item" data-page="withdraw">
+        <img src="assets/money.png" width="26" height="26" alt="Money">
+      </div>
+    </nav>
+
+    <!-- Welcome Modal -->
+    <div class="modal" id="welcomeModal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <div class="modal-carousel">
+          <div class="modal-track">
+            <div class="modal-logo"><img src="assets3/avatar1.png" alt="Avatar 1"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar2.png" alt="Avatar 2"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar3.png" alt="Avatar 3"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar4.png" alt="Avatar 4"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar5.png" alt="Avatar 5"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar1.png" alt="Avatar 1"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar2.png" alt="Avatar 2"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar3.png" alt="Avatar 3"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar4.png" alt="Avatar 4"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar5.png" alt="Avatar 5"><div class="modal-status-dot"></div></div>
+          </div>
+        </div>
+        <div class="modal-text">Add friends and send them a duel!</div>
+      </div>
+    </div>
+
+    <!-- Create Duel Modal -->
+    <div class="modal" id="createModal">
+      <div class="modal-content">
+        <button class="modal-close" id="closeCreateModal">&times;</button>
+        <div class="modal-header">
+          <div>BALANCE: 0 TON</div>
+          <button class="deposit">Deposit</button>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">MAP</div>
+          <div class="custom-select" id="mapSelect">
+            <div class="selected">Dust2 <span>▼</span></div>
+            <div class="options">
+              <div data-value="Dust2">Dust2</div>
+              <div data-value="Mirage">Mirage</div>
+              <div data-value="Inferno">Inferno</div>
+              <div data-value="Nuke">Nuke</div>
+              <div data-value="Cache">Cache</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">WEAPON</div>
+          <div class="custom-select" id="weaponSelect">
+            <div class="selected">AK-47 <span>▼</span></div>
+            <div class="options">
+              <div data-value="AK-47">AK-47</div>
+              <div data-value="M4A4">M4A4</div>
+              <div data-value="M4A1-S">M4A1-S</div>
+              <div data-value="AWP">AWP</div>
+              <div data-value="Desert Eagle">Desert Eagle</div>
+              <div data-value="USP-S">USP-S</div>
+              <div data-value="Glock-18">Glock-18</div>
+              <div data-value="P250">P250</div>
+              <div data-value="Tec-9">Tec-9</div>
+              <div data-value="FAMAS">FAMAS</div>
+              <div data-value="Galil AR">Galil AR</div>
+              <div data-value="SSG 08">SSG 08</div>
+              <div data-value="SCAR-20">SCAR-20</div>
+              <div data-value="AUG">AUG</div>
+              <div data-value="SG 553">SG 553</div>
+              <div data-value="MP9">MP9</div>
+              <div data-value="MAC-10">MAC-10</div>
+              <div data-value="UMP-45">UMP-45</div>
+              <div data-value="P90">P90</div>
+              <div data-value="PP-Bizon">PP-Bizon</div>
+              <div data-value="MP7">MP7</div>
+              <div data-value="XM1014">XM1014</div>
+              <div data-value="MAG-7">MAG-7</div>
+              <div data-value="Sawed-Off">Sawed-Off</div>
+              <div data-value="Nova">Nova</div>
+              <div data-value="Negev">Negev</div>
+              <div data-value="M249">M249</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">MODE</div>
+          <div class="custom-select" id="modeSelect">
+            <div class="selected">1v1 <span>▼</span></div>
+            <div class="options">
+              <div data-value="1v1">1v1</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">LOBBY</div>
+          <div class="custom-select" id="lobbySelect">
+            <div class="selected">Public <span>▼</span></div>
+            <div class="options">
+              <div data-value="public">Public</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">AMOUNT OF TON</div>
+          <div class="modal-amount" id="amountDisplay">
+            <span id="amountValue">0</span>
+            <img src="assets/ton.png" alt="TON logo">
+          </div>
+        </div>
+        <div class="keyboard">
+          <button class="key" data-value="1">1</button>
+          <button class="key" data-value="2">2</button>
+          <button class="key" data-value="3">3</button>
+          <button class="key" data-value="4">4</button>
+          <button class="key" data-value="5">5</button>
+          <button class="key" data-value="6">6</button>
+          <button class="key" data-value="7">7</button>
+          <button class="key" data-value="8">8</button>
+          <button class="key" data-value="9">9</button>
+          <button class="key" data-value=".">.</button>
+          <button class="key" data-value="0">0</button>
+          <button class="key delete" data-value="delete">⌫</button>
+        </div>
+        <button class="create-btn" id="createMatchBtn">Create</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Карусель
+      const modalTrack = document.querySelector('.modal-track');
+      const modalLogos = document.querySelectorAll('.modal-logo');
+      const logosArray = Array.from(modalLogos);
+
+      // Дублируем элементы несколько раз для бесшовной прокрутки
+      const minClones = 3;
+      const currentLogoCount = logosArray.length;
+      const originalLogoCount = currentLogoCount / 2;
+
+      for (let i = 0; i < minClones * originalLogoCount; i++) {
+        const clone = logosArray[i % originalLogoCount].cloneNode(true);
+        modalTrack.appendChild(clone);
+      }
+
+      // Welcome Modal Logic
+      const welcomeModal = document.getElementById('welcomeModal');
+      welcomeModal.style.display = 'flex';
+
+      document.getElementById('closeModal').addEventListener('click', () => {
+        welcomeModal.style.display = 'none';
+      });
+
+      welcomeModal.addEventListener('click', (e) => {
+        if (e.target === welcomeModal) {
+          welcomeModal.style.display = 'none';
+        }
+      });
+
+      // Navigation
+      let currentPage = 'friends';
+
+      function navigateTo(page) {
+        if (page === currentPage) return;
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+          item.classList.add('inactive');
+        });
+
+        const activeItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+        activeItem.classList.remove('inactive');
+        activeItem.classList.add('active');
+
+        if (page === 'home') {
+          window.location.href = 'index.html';
+        } else if (page === 'withdraw') {
+          window.location.href = 'withdraw.html';
+        }
+
+        currentPage = page;
+      }
+
+      document.querySelector(`.nav-item[data-page="${currentPage}"]`).classList.add('active');
+      document.querySelectorAll('.nav-item').forEach(item => {
+        if (item.getAttribute('data-page') !== currentPage) {
+          item.classList.add('inactive');
+        }
+      });
+
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const page = item.getAttribute('data-page');
+          navigateTo(page);
+        });
+      });
+
+      // Code Input
+      document.getElementById('codeInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          alert('Code entered: ' + e.target.value);
+        }
+      });
+
+      // Copy Code
+      document.getElementById('copyCodeBtn').addEventListener('click', () => {
+        const userCode = 'FRIEND123_CODE';
+        navigator.clipboard.writeText(userCode).then(() => {
+          const button = document.getElementById('copyCodeBtn');
+          button.textContent = 'Copied!';
+          button.style.background = '#00ff66';
+          button.style.color = '#000';
+          setTimeout(() => {
+            button.textContent = 'Copy my code';
+            button.style.background = '#1677ff';
+            button.style.color = '#fff';
+          }, 2000);
+        }).catch(() => {
+          alert('Code: ' + userCode);
+        });
+      });
+
+      // Create Duel Modal Logic
+      const createModal = document.getElementById('createModal');
+      const amountDisplay = document.getElementById('amountValue');
+      const keys = document.querySelectorAll('.key');
+      const createMatchBtn = document.getElementById('createMatchBtn');
+      const customSelects = document.querySelectorAll('.custom-select');
+      const closeCreateModalBtn = document.getElementById('closeCreateModal');
+
+      document.querySelectorAll('.duel-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const friendName = btn.getAttribute('data-friend');
+          createModal.setAttribute('data-friend', friendName);
+          createModal.style.display = 'block';
+          // Сбрасываем значения для нового дуэльного окна
+          amountDisplay.textContent = '0';
+          document.getElementById('mapSelect').querySelector('.selected').textContent = 'Dust2 ▼';
+          document.getElementById('weaponSelect').querySelector('.selected').textContent = 'AK-47 ▼';
+          document.getElementById('modeSelect').querySelector('.selected').textContent = '1v1 ▼';
+          document.getElementById('lobbySelect').querySelector('.selected').textContent = 'Public ▼';
+        });
+      });
+
+      closeCreateModalBtn.addEventListener('click', () => {
+        createModal.style.display = 'none';
+        amountDisplay.textContent = '0';
+      });
+
+      createModal.addEventListener('click', (e) => {
+        if (e.target === createModal) {
+          createModal.style.display = 'none';
+          amountDisplay.textContent = '0';
+        }
+      });
+
+      keys.forEach(key => {
+        key.addEventListener('click', () => {
+          const value = key.getAttribute('data-value');
+          let currentValue = amountDisplay.textContent;
+
+          if (value === 'delete') {
+            currentValue = currentValue.slice(0, -1) || '0';
+          } else if (value === '.' && currentValue.includes('.')) {
+            return; // Предотвращаем добавление второй точки
+          } else if (currentValue === '0' && value !== '.') {
+            currentValue = value;
+          } else {
+            currentValue += value;
+          }
+
+          // Удаляем ведущие нули, если число не дробное
+          if (!currentValue.includes('.')) {
+            currentValue = parseInt(currentValue, 10).toString();
+          }
+          amountDisplay.textContent = currentValue === '' ? '0' : currentValue;
+        });
+      });
+
+      customSelects.forEach(select => {
+        select.addEventListener('click', (e) => {
+          e.stopPropagation();
+          customSelects.forEach(s => s.classList.remove('open'));
+          select.classList.toggle('open');
+        });
+
+        const options = select.querySelectorAll('.options div');
+        options.forEach(option => {
+          option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const selected = select.querySelector('.selected');
+            selected.textContent = option.textContent + ' ▼';
+            select.classList.remove('open');
+          });
+        });
+      });
+
+      document.addEventListener('click', e => {
+        customSelects.forEach(select => {
+          if (!select.contains(e.target) && e.target !== select) {
+            select.classList.remove('open');
+          }
+        });
+      });
+
+      createMatchBtn.addEventListener('click', () => {
+        const friendName = createModal.getAttribute('data-friend');
+        const map = document.getElementById('mapSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+        const weapon = document.getElementById('weaponSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+        const mode = document.getElementById('modeSelect').querySelector('.selected').textContent.trim().split(' ')[0];
+        const lobby = document.getElementById('lobbySelect').querySelector('.selected').textContent.trim().split(' ')[0];
+        const stake = parseFloat(amountDisplay.textContent) || 0;
+
+        alert(`Duel created with ${friendName}! Stake: ${stake} TON, Map: ${map}, Weapon: ${weapon}, Mode: ${mode}, Lobby: ${lobby}`);
+        createModal.style.display = 'none';
+        amountDisplay.textContent = '0';
+      });
+    });
+  </script>
+</body>
+</html>

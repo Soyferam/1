@@ -59,6 +59,7 @@
     .profile {
       border: 2px solid #333;
       padding: 4px;
+      cursor: pointer;
     }
     .bell {
       position: relative;
@@ -233,23 +234,48 @@
     }
 
     /* Bottom nav */
-    nav {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 8px;
-      background: linear-gradient(180deg, #080808, #000);
-      align-items: center;
-      position: sticky;
-      bottom: 0;
-      z-index: 100;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      color: var(--muted);
-    }
+nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 8px;
+  background: linear-gradient(180deg, #080808, #000);
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-item img {
+  filter: grayscale(0%);
+  transition: filter 0.3s;
+}
+
+.nav-item.active img {
+  filter: grayscale(0%); /* Активная иконка остается цветной */
+}
+
+.nav-item.inactive img {
+  filter: grayscale(100%); /* Неактивные иконки становятся серыми */
+}
+
+.nav-item span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.nav-item.active {
+  color: var(--accent-green); /* Активная вкладка выделяется зеленым */
+}
 
     /* Modal Styles */
     .modal {
@@ -280,7 +306,7 @@
     .modal-close {
       position: absolute;
       top: 10px;
-      left: 10px;
+      right: 10px;
       width: 30px;
       height: 30px;
       background: none;
@@ -399,6 +425,174 @@
       text-align: center;
     }
 
+    /* Profile Modal Styles */
+    .profile-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1002;
+    }
+    .profile-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 420px;
+      border: 6px solid #2a2a2a;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #1a1a1b;
+      border-radius: 15px;
+    }
+    .profile-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #333;
+    }
+    .profile-info {
+      flex: 1;
+    }
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .copy-code-btn {
+      background: var(--blue);
+      color: #fff;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .chart-container {
+      background: #1a1a1b;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 20px;
+      position: relative;
+      height: 200px;
+    }
+    .chart {
+      width: 100%;
+      height: 150px;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+    }
+    .chart-line {
+      position: absolute;
+      stroke: var(--accent-green);
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .chart-point {
+      fill: var(--accent-green);
+      stroke: #fff;
+      stroke-width: 2;
+      r: 5;
+      cursor: pointer;
+      transition: r 0.2s;
+    }
+    .chart-point:hover {
+      r: 7;
+      fill: #fff;
+    }
+    .chart-cursor {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.8);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .chart-tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+      border: 1px solid #333;
+    }
+    .stats-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .stats-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      background: #1a1a1b;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+    .stats-item.win {
+      border-left: 4px solid var(--accent-green);
+    }
+    .stats-item.loss {
+      border-left: 4px solid #ff2b2b;
+    }
+    .stats-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stats-result {
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .stats-result.win {
+      color: var(--accent-green);
+    }
+    .stats-result.loss {
+      color: #ff2b2b;
+    }
+    .stats-details {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .stats-amount {
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .stats-amount.win {
+      color: var(--accent-green);
+    }
+    .stats-amount.loss {
+      color: #ff2b2b;
+    }
+
     /* Notification Modal Styles */
     .notification-modal {
       display: none;
@@ -434,11 +628,58 @@
       background: #1a1a1b;
       border-radius: 10px;
     }
+    .notification-item.match {
+      grid-template-columns: 50px 60px 60px 60px 60px 100px;
+      align-items: center;
+    }
     .notification-item .avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
+    }
+    .notification-item .player-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .notification-item .player-meta .name {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .notification-item .info {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .notification-item .crypto {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 5px;
+      background: #0a1a22;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .notification-item .map {
+      font-weight: 800;
+      text-align: center;
+      font-size: 12px;
+      word-break: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .notification-item .weapon {
+      font-weight: 700;
+      text-align: center;
+      font-size: 12px;
+      word-break: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .notification-item .message {
       font-size: 14px;
@@ -469,6 +710,7 @@
       border: none;
       cursor: pointer;
       font-size: 10px;
+      white-space: nowrap;
     }
     .back-arrow {
       position: absolute;
@@ -483,6 +725,7 @@
       color: #fff;
       line-height: 30px;
       text-align: center;
+      margin-bottom: 20px;
     }
     .back-arrow:hover {
       color: var(--accent-green);
@@ -497,7 +740,7 @@
   <div class="device" role="application">
     <header>
       <div class="left-row">
-        <div class="icon profile" aria-hidden="true">
+        <div class="icon profile" id="profileBtn" aria-hidden="true">
           <img src="assets/user.png" width="18" height="18" alt="Profile">
         </div>
         <div class="bell" id="bellBtn" aria-hidden="true">
@@ -551,17 +794,17 @@
 
     <main class="list" id="matchesList"></main>
 
-    <nav>
-      <div class="nav-item">
-        <img src="assets/home.png" width="26" height="26" alt="Home">
-      </div>
-      <div class="nav-item">
-        <img src="assets/friends.png" width="26" height="26" alt="Friends">
-      </div>
-      <div class="nav-item">
-        <img src="assets/money.png" width="26" height="26" alt="Money">
-      </div>
-    </nav>
+   <nav>
+  <div class="nav-item" data-page="home">
+    <img src="assets/home.png" width="26" height="26" alt="Home">
+  </div>
+  <div class="nav-item" data-page="friends">
+    <img src="assets/friends.png" width="26" height="26" alt="Friends">
+  </div>
+  <div class="nav-item" data-page="withdraw">
+    <img src="assets/money.png" width="26" height="26" alt="Money">
+  </div>
+</nav>
 
     <!-- Create Modal -->
     <div class="modal" id="createModal">
@@ -570,6 +813,27 @@
         <div class="modal-header">
           <div>BALANCE: 0 TON</div>
           <button class="deposit">Deposit</button>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">AMOUNT OF TON</div>
+          <div class="modal-amount" id="amountDisplay">
+            <span id="amountValue">0</span>
+            <img src="assets/ton.png" alt="TON logo">
+          </div>
+        </div>
+        <div class="keyboard">
+          <button class="key" data-value="1">1</button>
+          <button class="key" data-value="2">2</button>
+          <button class="key" data-value="3">3</button>
+          <button class="key" data-value="4">4</button>
+          <button class="key" data-value="5">5</button>
+          <button class="key" data-value="6">6</button>
+          <button class="key" data-value="7">7</button>
+          <button class="key" data-value="8">8</button>
+          <button class="key" data-value="9">9</button>
+          <button class="key" data-value=".">.</button>
+          <button class="key" data-value="0">0</button>
+          <button class="key delete" data-value="delete">⌫</button>
         </div>
         <div class="modal-row">
           <div class="modal-label">MAP</div>
@@ -637,27 +901,6 @@
             </div>
           </div>
         </div>
-        <div class="modal-row">
-          <div class="modal-label">AMOUNT OF TON</div>
-          <div class="modal-amount" id="amountDisplay">
-            <span id="amountValue">0</span>
-            <img src="assets/ton.png" alt="TON logo">
-          </div>
-        </div>
-        <div class="keyboard">
-          <button class="key" data-value="1">1</button>
-          <button class="key" data-value="2">2</button>
-          <button class="key" data-value="3">3</button>
-          <button class="key" data-value="4">4</button>
-          <button class="key" data-value="5">5</button>
-          <button class="key" data-value="6">6</button>
-          <button class="key" data-value="7">7</button>
-          <button class="key" data-value="8">8</button>
-          <button class="key" data-value="9">9</button>
-          <button class="key" data-value=".">.</button>
-          <button class="key" data-value="0">0</button>
-          <button class="key delete" data-value="delete">⌫</button>
-        </div>
         <button class="create-btn" id="createMatchBtn">Create</button>
       </div>
     </div>
@@ -674,7 +917,37 @@
     <div class="notification-modal" id="fullMessageModal">
       <div class="notification-content">
         <button class="back-arrow" id="backToNotifications">&larr;</button>
-        <div id="fullMessageContent"></div>
+        <div id="fullMessageContent" style="margin-top: 40px;"></div>
+      </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+      <div class="profile-content">
+        <button class="modal-close" id="closeProfileModal">&times;</button>
+        
+        <div class="profile-header">
+          <img src="assets/player.png" class="profile-avatar" alt="Profile avatar">
+          <div class="profile-info">
+            <div class="profile-name">Player123</div>
+            <button class="copy-code-btn" id="copyCodeBtn">Copy my code</button>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <svg class="chart" id="statsChart" viewBox="0 0 350 150">
+            <defs>
+              <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:rgba(0,255,102,0.3);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:rgba(0,255,102,0);stop-opacity:0" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="chart-cursor" id="chartCursor"></div>
+          <div class="chart-tooltip" id="chartTooltip"></div>
+        </div>
+
+        <div class="stats-list" id="statsList"></div>
       </div>
     </div>
   </div>
@@ -689,6 +962,20 @@
       {id: 6, stake: 1, map: 'Dust2', weapon: 'AK-47', player: 'Player6'},
       {id: 7, stake: 7, map: 'Overpass', weapon: 'AK-47', player: 'Player7'},
       {id: 8, stake: 3, map: 'Dust2', weapon: 'M4A1', player: 'Player8'},
+    ];
+
+    // Sample stats data
+    const statsData = [
+      { match: 1, result: 'win', amount: 10, weapon: 'AK-47', map: 'Dust2', balance: 10 },
+      { match: 2, result: 'win', amount: 15, weapon: 'AWP', map: 'Mirage', balance: 25 },
+      { match: 3, result: 'loss', amount: -8, weapon: 'M4A4', map: 'Inferno', balance: 17 },
+      { match: 4, result: 'win', amount: 12, weapon: 'AK-47', map: 'Dust2', balance: 29 },
+      { match: 5, result: 'loss', amount: -15, weapon: 'Desert Eagle', map: 'Nuke', balance: 14 },
+      { match: 6, result: 'win', amount: 20, weapon: 'AWP', map: 'Mirage', balance: 34 },
+      { match: 7, result: 'loss', amount: -12, weapon: 'M4A1-S', map: 'Cache', balance: 22 },
+      { match: 8, result: 'win', amount: 18, weapon: 'AK-47', map: 'Dust2', balance: 40 },
+      { match: 9, result: 'win', amount: 25, weapon: 'AWP', map: 'Overpass', balance: 65 },
+      { match: 10, result: 'loss', amount: -10, weapon: 'P90', map: 'Mirage', balance: 55 }
     ];
 
     const list = document.getElementById('matchesList');
@@ -707,6 +994,238 @@
     const fullMessageModal = document.getElementById('fullMessageModal');
     const fullMessageContent = document.getElementById('fullMessageContent');
     const backToNotifications = document.getElementById('backToNotifications');
+    const profileBtn = document.getElementById('profileBtn');
+    const profileModal = document.getElementById('profileModal');
+    const closeProfileModal = document.getElementById('closeProfileModal');
+    const copyCodeBtn = document.getElementById('copyCodeBtn');
+    const statsChart = document.getElementById('statsChart');
+    const chartCursor = document.getElementById('chartCursor');
+    const chartTooltip = document.getElementById('chartTooltip');
+    const statsList = document.getElementById('statsList');
+
+    function drawChart() {
+      const chartWidth = 350;
+      const chartHeight = 150;
+      const padding = 20;
+      const dataWidth = chartWidth - padding * 2;
+      const dataHeight = chartHeight - padding * 2;
+      
+      const maxBalance = Math.max(...statsData.map(d => d.balance));
+      const minBalance = Math.min(...statsData.map(d => d.balance));
+      const balanceRange = maxBalance - minBalance;
+      
+      let pathData = '';
+      const points = [];
+      
+      statsData.forEach((data, index) => {
+        const x = padding + (index / (statsData.length - 1)) * dataWidth;
+        const y = padding + ((maxBalance - data.balance) / balanceRange) * dataHeight;
+        
+        points.push({ x, y, data });
+        
+        if (index === 0) {
+          pathData += `M ${x} ${y}`;
+        } else {
+          pathData += ` L ${x} ${y}`;
+        }
+      });
+      
+      // Clear previous chart
+      statsChart.innerHTML = '';
+      
+      // Add gradient definition
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      gradient.setAttribute('id', 'chartGradient');
+      gradient.setAttribute('x1', '0%');
+      gradient.setAttribute('y1', '0%');
+      gradient.setAttribute('x2', '0%');
+      gradient.setAttribute('y2', '100%');
+      
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('style', 'stop-color:rgba(0,255,102,0.3);stop-opacity:1');
+      
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('style', 'stop-color:rgba(0,255,102,0);stop-opacity:0');
+      
+      gradient.appendChild(stop1);
+      gradient.appendChild(stop2);
+      defs.appendChild(gradient);
+      statsChart.appendChild(defs);
+      
+      // Add filled area under the line
+      const areaPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const areaData = pathData + ` L ${points[points.length - 1].x} ${chartHeight - padding} L ${padding} ${chartHeight - padding} Z`;
+      areaPath.setAttribute('d', areaData);
+      areaPath.setAttribute('fill', 'url(#chartGradient)');
+      statsChart.appendChild(areaPath);
+      
+      // Add line
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      line.setAttribute('d', pathData);
+      line.setAttribute('class', 'chart-line');
+      statsChart.appendChild(line);
+      
+      // Add points
+      points.forEach((point, index) => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', point.x);
+        circle.setAttribute('cy', point.y);
+        circle.setAttribute('r', 5);
+        circle.setAttribute('class', 'chart-point');
+        circle.setAttribute('data-index', index);
+        statsChart.appendChild(circle);
+      });
+      
+      // ИСПРАВЛЕННАЯ ЛОГИКА ИНТЕРАКТИВНОСТИ ГРАФИКА
+      let activePointIndex = -1;
+      
+      // Функция для показа данных по индексу точки
+      function showDataAtPoint(index) {
+        if (index < 0 || index >= points.length) return;
+        
+        const point = points[index];
+        const data = point.data;
+        
+        activePointIndex = index;
+        
+        // Показываем курсор точно на точке
+        chartCursor.style.left = `${(point.x / chartWidth) * 100}%`;
+        chartCursor.style.opacity = '1';
+        
+        // Показываем тултип
+        chartTooltip.innerHTML = `
+          <div>${data.result === 'win' ? 'Победа' : 'Поражение'}</div>
+          <div>${data.amount > 0 ? '+' : ''}${data.amount} TON</div>
+          <div>Баланс: ${data.balance} TON</div>
+        `;
+        
+        const tooltipX = Math.min(Math.max((point.x / chartWidth) * 100, 10), 90);
+        chartTooltip.style.left = `${tooltipX}%`;
+        chartTooltip.style.top = `${Math.max((point.y / chartHeight) * 100 - 15, 5)}%`;
+        chartTooltip.style.opacity = '1';
+        
+        // Подсвечиваем активную точку
+        const allPoints = statsChart.querySelectorAll('.chart-point');
+        allPoints.forEach((p, i) => {
+          if (i === index) {
+            p.setAttribute('r', '7');
+            p.setAttribute('fill', '#fff');
+          } else {
+            p.setAttribute('r', '5');
+            p.setAttribute('fill', 'var(--accent-green)');
+          }
+        });
+      }
+      
+      // Функция для скрытия данных
+      function hideData() {
+        activePointIndex = -1;
+        chartCursor.style.opacity = '0';
+        chartTooltip.style.opacity = '0';
+        
+        const allPoints = statsChart.querySelectorAll('.chart-point');
+        allPoints.forEach(p => {
+          p.setAttribute('r', '5');
+          p.setAttribute('fill', 'var(--accent-green)');
+        });
+      }
+      
+      // Находим ближайшую точку по X координате
+      function findNearestPointIndex(mouseX) {
+        let nearestIndex = 0;
+        let minDistance = Math.abs(points[0].x - mouseX);
+        
+        for (let i = 1; i < points.length; i++) {
+          const distance = Math.abs(points[i].x - mouseX);
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearestIndex = i;
+          }
+        }
+        
+        return nearestIndex;
+      }
+      
+      // Mouse events
+      statsChart.addEventListener('mousemove', (e) => {
+        const rect = statsChart.getBoundingClientRect();
+        const mouseX = ((e.clientX - rect.left) / rect.width) * chartWidth;
+        
+        const nearestIndex = findNearestPointIndex(mouseX);
+        
+        if (nearestIndex !== activePointIndex) {
+          showDataAtPoint(nearestIndex);
+        }
+      });
+      
+      statsChart.addEventListener('mouseleave', hideData);
+      
+      // Touch events for mobile
+      statsChart.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = statsChart.getBoundingClientRect();
+        const touchX = ((touch.clientX - rect.left) / rect.width) * chartWidth;
+        
+        const nearestIndex = findNearestPointIndex(touchX);
+        showDataAtPoint(nearestIndex);
+      });
+      
+      statsChart.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = statsChart.getBoundingClientRect();
+        const touchX = ((touch.clientX - rect.left) / rect.width) * chartWidth;
+        
+        const nearestIndex = findNearestPointIndex(touchX);
+        
+        if (nearestIndex !== activePointIndex) {
+          showDataAtPoint(nearestIndex);
+        }
+      });
+      
+      statsChart.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        // На мобильных устройствах оставляем данные видимыми немного дольше
+        setTimeout(hideData, 3000);
+      });
+      
+      // Click на точки для дополнительного удобства
+      statsChart.addEventListener('click', (e) => {
+        const rect = statsChart.getBoundingClientRect();
+        const clickX = ((e.clientX - rect.left) / rect.width) * chartWidth;
+        
+        const nearestIndex = findNearestPointIndex(clickX);
+        showDataAtPoint(nearestIndex);
+      });
+    }
+
+    function renderStatsList() {
+      statsList.innerHTML = '';
+      [...statsData].reverse().forEach(stat => {
+        const item = document.createElement('div');
+        item.className = `stats-item ${stat.result}`;
+        
+        item.innerHTML = `
+          <div class="stats-left">
+            <div class="stats-result ${stat.result}">
+              ${stat.result === 'win' ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ'}
+            </div>
+            <div class="stats-details">
+              ${stat.weapon} • ${stat.map}
+            </div>
+          </div>
+          <div class="stats-amount ${stat.result}">
+            ${stat.amount > 0 ? '+' : ''}${stat.amount} TON
+          </div>
+        `;
+        
+        statsList.appendChild(item);
+      });
+    }
 
     function render() {
       list.innerHTML = '';
@@ -746,7 +1265,7 @@
       });
     });
 
-    let count = 1;
+    let count = 2;
     createBtn.addEventListener('click', () => {
       modal.style.display = 'block';
     });
@@ -831,14 +1350,21 @@
         const item = document.createElement('div');
         item.className = 'notification-item';
         if (notif.type === 'match') {
+          item.className += ' match';
           item.innerHTML = `
-            <img src="${notif.avatar}" class="avatar" alt="${notif.name}">
-            <div>
-              <div>${notif.name}</div>
-              <div class="map">${notif.map}</div>
-              <div class="weapon">${notif.weapon}</div>
+            <div class="player-meta">
+              <img src="${notif.avatar}" class="avatar" alt="${notif.name}">
+              <div class="name">${notif.name}</div>
             </div>
-            <button class="accept" data-id="${notif.name}">Accept</button>
+            <div class="crypto">
+              <img src="assets/ton.png" style="width:14px;height:14px;border-radius:50%" alt="TON logo">
+              <div>${notif.stake}</div>
+            </div>
+            <div class="map">${notif.map}</div>
+            <div class="weapon">${notif.weapon}</div>
+            <div class="accept-wrap">
+              <button class="accept" data-id="${notif.name}">Accept</button>
+            </div>
           `;
         } else {
           item.innerHTML = `
@@ -887,6 +1413,76 @@
         e.target.style.background = '#666';
       }
     });
+
+    // Profile Modal Event Listeners
+    profileBtn.addEventListener('click', () => {
+      profileModal.style.display = 'block';
+      drawChart();
+      renderStatsList();
+    });
+
+    closeProfileModal.addEventListener('click', () => {
+      profileModal.style.display = 'none';
+    });
+
+    copyCodeBtn.addEventListener('click', () => {
+      const userCode = 'PLAYER123_CODE';
+      navigator.clipboard.writeText(userCode).then(() => {
+        copyCodeBtn.textContent = 'Copied!';
+        copyCodeBtn.style.background = '#00ff66';
+        copyCodeBtn.style.color = '#000';
+        setTimeout(() => {
+          copyCodeBtn.textContent = 'Copy my code';
+          copyCodeBtn.style.background = '#1677ff';
+          copyCodeBtn.style.color = '#fff';
+        }, 2000);
+      }).catch(() => {
+        alert('Code: ' + userCode);
+      });
+    });
+    // Инициализация текущей страницы
+let currentPage = 'home';
+
+// Функция для переключения страниц
+function navigateTo(page) {
+  if (page === currentPage) return; // Ничего не делаем, если уже на этой странице
+
+  // Удаляем классы активности
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+    item.classList.add('inactive');
+  });
+
+  // Устанавливаем активный класс для выбранной вкладки
+  const activeItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+  activeItem.classList.remove('inactive');
+  activeItem.classList.add('active');
+
+  // Переход на новую страницу
+  if (page === 'friends') {
+    window.location.href = 'friends.html';
+  } else if (page === 'withdraw') {
+    window.location.href = 'withdraw.html';
+  }
+
+  currentPage = page;
+}
+
+// Установка начальной активной вкладки (Home)
+document.querySelector(`.nav-item[data-page="${currentPage}"]`).classList.add('active');
+document.querySelectorAll('.nav-item').forEach(item => {
+  if (item.getAttribute('data-page') !== currentPage) {
+    item.classList.add('inactive');
+  }
+});
+
+// Обработчик кликов по навигации
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const page = item.getAttribute('data-page');
+    navigateTo(page);
+  });
+});
   </script>
 </body>
 </html>
