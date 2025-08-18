@@ -1,0 +1,32 @@
+{
+  "name": "frag-arena-ui",
+  "version": "1.0.0",
+  "description": "Мобильное веб-приложение для игровой платформы Frag Arena",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Build completed'",
+    "test": "echo 'Tests completed'"
+  },
+  "keywords": [
+    "gaming",
+    "ui",
+    "mobile",
+    "web-app",
+    "cs2",
+    "arena"
+  ],
+  "author": "Frag Arena Team",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frag-arena/ui-mock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/frag-arena/ui-mock/issues"
+  },
+  "homepage": "https://github.com/frag-arena/ui-mock#readme"
+}

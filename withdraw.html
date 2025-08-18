@@ -4,134 +4,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Withdraw - Frag Arena</title>
-  <style>
-    :root {
-      --bg: #0b0b0b;
-      --muted: #8e8e8e;
-      --accent-green: #00ff66;
-    }
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: var(--bg);
-      color: #fff;
-      overflow: hidden;
-      touch-action: manipulation;
-    }
-    .device {
-  max-width: 420px;
-  margin: 0 auto;
-  border-left: 1px solid #111;
-  border-right: 1px solid #111;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 40px; /* Увеличиваем отступ снизу, чтобы учесть поднятие nav */
-  box-sizing: border-box;
-}
-main {
-    flex-grow: 1; /* Растягивает содержимое, чтобы вытолкнуть nav вниз */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-nav {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 8px;
-  background: linear-gradient(180deg, #080808, #000);
-  align-items: center;
-  position: sticky;
-  bottom: 20px; /* Изменено с 0 на 20px */
-  z-index: 100;
-  margin-bottom: 20px; /* Добавляем отступ снизу, чтобы контент не перекрывался */
-}
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      color: var(--muted);
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-    .nav-item img {
-      filter: grayscale(100%);
-      transition: filter 0.3s;
-    }
-    .nav-item.active img {
-      filter: grayscale(0%);
-    }
-    .nav-item.inactive img {
-      filter: grayscale(100%);
-    }
-    .nav-item span {
-      font-size: 12px;
-      font-weight: 500;
-      color: inherit;
-    }
-    .nav-item.active {
-      color: #fff;
-    }
-    .nav-item.inactive {
-      color: var(--muted);
-    }
-  </style>
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
   <div class="device">
-    <main>
-      <h1>Withdraw Page</h1>
+    <main class="withdraw-content">
+      <!-- Content will be rendered by JavaScript -->
     </main>
-   <nav>
-  <div class="nav-item" data-page="home">
-    <img src="assets/home.png" width="26" height="26" alt="Home">
+    
+    <nav>
+      <div class="nav-item" data-page="home">
+        <img src="assets/home.png" width="26" height="26" alt="Home">
+      </div>
+      <div class="nav-item" data-page="friends">
+        <img src="assets/friends.png" width="26" height="26" alt="Friends">
+      </div>
+      <div class="nav-item" data-page="withdraw">
+        <img src="assets/money.png" width="26" height="26" alt="Money">
+      </div>
+    </nav>
   </div>
-  <div class="nav-item" data-page="friends">
-    <img src="assets/friends.png" width="26" height="26" alt="Friends">
-  </div>
-  <div class="nav-item" data-page="withdraw">
-    <img src="assets/money.png" width="26" height="26" alt="Money">
-  </div>
-</nav>
-  </div>
-  <script>
-    let currentPage = 'withdraw';
 
-    function navigateTo(page) {
-      if (page === currentPage) return;
-
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-        item.classList.add('inactive');
-      });
-
-      const activeItem = document.querySelector(`.nav-item[data-page="${page}"]`);
-      activeItem.classList.remove('inactive');
-      activeItem.classList.add('active');
-
-      if (page === 'home') {
-        window.location.href = 'index.html';
-      } else if (page === 'friends') {
-        window.location.href = 'friends.html';
-      }
-
-      currentPage = page;
-    }
-
-    document.querySelector(`.nav-item[data-page="${currentPage}"]`).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(item => {
-      if (item.getAttribute('data-page') !== currentPage) {
-        item.classList.add('inactive');
-      }
-    });
-
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const page = item.getAttribute('data-page');
-        navigateTo(page);
-      });
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="js/common.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/withdraw.js"></script>
 </body>
 </html>
