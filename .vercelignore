@@ -1,0 +1,25 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Configuration files
+package.json
+package-lock.json
+vercel.json
+.vercelignore
+
+# Development files
+.DS_Store
+*.log
+
+# Test files
+test.html
+
+# Build artifacts
+node_modules/
+dist/
+build/

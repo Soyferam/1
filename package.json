@@ -2,12 +2,13 @@
   "name": "frag-arena-ui",
   "version": "1.0.0",
   "description": "Мобильное веб-приложение для игровой платформы Frag Arena",
-  "main": "index.html",
+  "main": "public/index.html",
   "scripts": {
     "start": "python3 -m http.server 8000",
     "dev": "python3 -m http.server 8000",
-    "build": "echo 'Build completed'",
-    "test": "echo 'Tests completed'"
+    "build": "./build.sh",
+    "test": "echo 'Tests completed'",
+    "vercel-build": "./build.sh"
   },
   "keywords": [
     "gaming",
@@ -23,10 +24,10 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/frag-arena/ui-mock.git"
+    "url": "https://github.com/Soyferam/1.git"
   },
   "bugs": {
-    "url": "https://github.com/frag-arena/ui-mock/issues"
+    "url": "https://github.com/Soyferam/1/issues"
   },
-  "homepage": "https://github.com/frag-arena/ui-mock#readme"
+  "homepage": "https://github.com/Soyferam/1#readme"
 }

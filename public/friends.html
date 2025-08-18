@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Friends - Frag Arena</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="device">
+    <header>
+      <div class="left-row">
+        <div class="icon profile" id="profileBtn" aria-hidden="true">
+          <img src="assets/user.png" width="18" height="18" alt="Profile">
+        </div>
+        <div class="bell" id="bellBtn" aria-hidden="true">
+          <img src="assets/bell.png" width="22" height="22" alt="Notifications">
+          <div class="badge" id="notif">0</div>
+        </div>
+      </div>
+      <button class="deposit">Deposit</button>
+    </header>
+    
+    <section class="hero">
+      <div class="logo-carousel">
+        <div class="logo-track" id="logoTrack">
+          <div class="logo"><img src="assets2/friend1.png" alt="Friend 1"></div>
+          <div class="logo"><img src="assets2/friend2.png" alt="Friend 2"></div>
+          <div class="logo"><img src="assets2/friend3.png" alt="Friend 3"></div>
+          <div class="logo"><img src="assets2/friend4.png" alt="Friend 4"></div>
+          <div class="logo"><img src="assets2/friend5.png" alt="Friend 5"></div>
+          <div class="logo"><img src="assets2/friend6.png" alt="Friend 6"></div>
+          <div class="logo"><img src="assets2/friend7.png" alt="Friend 7"></div>
+          <div class="logo"><img src="assets2/friend8.png" alt="Friend 8"></div>
+          <div class="logo"><img src="assets2/friend1.png" alt="Friend 1"></div>
+          <div class="logo"><img src="assets2/friend2.png" alt="Friend 2"></div>
+          <div class="logo"><img src="assets2/friend3.png" alt="Friend 3"></div>
+          <div class="logo"><img src="assets2/friend4.png" alt="Friend 4"></div>
+          <div class="logo"><img src="assets2/friend5.png" alt="Friend 5"></div>
+          <div class="logo"><img src="assets2/friend6.png" alt="Friend 6"></div>
+          <div class="logo"><img src="assets2/friend7.png" alt="Friend 7"></div>
+          <div class="logo"><img src="assets2/friend8.png" alt="Friend 8"></div>
+        </div>
+      </div>
+      <div class="title">Frag Arena</div>
+      <div class="search-wrap">
+        <input id="codeInput" class="search" placeholder="Enter friends code" />
+        <button id="copyCodeBtn" class="create">Copy my code</button>
+      </div>
+    </section>
+    
+    <div class="friends-section">
+      <div class="list-header">FRIENDS</div>
+      <div class="friends-list" id="friendsList">
+        <!-- Friends will be rendered here by JavaScript -->
+      </div>
+    </div>
+    
+    <nav>
+      <div class="nav-item" data-page="home">
+        <img src="assets/home.png" width="26" height="26" alt="Home">
+      </div>
+      <div class="nav-item" data-page="friends">
+        <img src="assets/friends.png" width="26" height="26" alt="Friends">
+      </div>
+      <div class="nav-item" data-page="withdraw">
+        <img src="assets/money.png" width="26" height="26" alt="Money">
+      </div>
+    </nav>
+
+    <!-- Welcome Modal -->
+    <div class="modal" id="welcomeModal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeModal">&times;</span>
+        <div class="modal-carousel">
+          <div class="modal-track">
+            <div class="modal-logo"><img src="assets3/avatar1.png" alt="Avatar 1"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar2.png" alt="Avatar 2"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar3.png" alt="Avatar 3"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar4.png" alt="Avatar 4"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar5.png" alt="Avatar 5"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar1.png" alt="Avatar 1"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar2.png" alt="Avatar 2"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar3.png" alt="Avatar 3"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar4.png" alt="Avatar 4"><div class="modal-status-dot"></div></div>
+            <div class="modal-logo"><img src="assets3/avatar5.png" alt="Avatar 5"><div class="modal-status-dot"></div></div>
+          </div>
+        </div>
+        <div class="modal-text">Add friends and send them a duel!</div>
+      </div>
+    </div>
+
+    <!-- Create Duel Modal -->
+    <div class="modal" id="createModal">
+      <div class="modal-content">
+        <button class="modal-close" id="closeCreateModal">&times;</button>
+        <div class="modal-header">
+          <div>BALANCE: 0 TON</div>
+          <button class="deposit">Deposit</button>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">MAP</div>
+          <div class="custom-select" id="mapSelect">
+            <div class="selected">Dust2 <span>▼</span></div>
+            <div class="options">
+              <div data-value="Dust2">Dust2</div>
+              <div data-value="Mirage">Mirage</div>
+              <div data-value="Inferno">Inferno</div>
+              <div data-value="Nuke">Nuke</div>
+              <div data-value="Cache">Cache</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">WEAPON</div>
+          <div class="custom-select" id="weaponSelect">
+            <div class="selected">AK-47 <span>▼</span></div>
+            <div class="options">
+              <div data-value="AK-47">AK-47</div>
+              <div data-value="M4A4">M4A4</div>
+              <div data-value="M4A1-S">M4A1-S</div>
+              <div data-value="AWP">AWP</div>
+              <div data-value="Desert Eagle">Desert Eagle</div>
+              <div data-value="USP-S">USP-S</div>
+              <div data-value="Glock-18">Glock-18</div>
+              <div data-value="P250">P250</div>
+              <div data-value="Tec-9">Tec-9</div>
+              <div data-value="FAMAS">FAMAS</div>
+              <div data-value="Galil AR">Galil AR</div>
+              <div data-value="SSG 08">SSG 08</div>
+              <div data-value="SCAR-20">SCAR-20</div>
+              <div data-value="AUG">AUG</div>
+              <div data-value="SG 553">SG 553</div>
+              <div data-value="MP9">MP9</div>
+              <div data-value="MAC-10">MAC-10</div>
+              <div data-value="UMP-45">UMP-45</div>
+              <div data-value="P90">P90</div>
+              <div data-value="PP-Bizon">PP-Bizon</div>
+              <div data-value="MP7">MP7</div>
+              <div data-value="XM1014">XM1014</div>
+              <div data-value="MAG-7">MAG-7</div>
+              <div data-value="Sawed-Off">Sawed-Off</div>
+              <div data-value="Nova">Nova</div>
+              <div data-value="Negev">Negev</div>
+              <div data-value="M249">M249</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">MODE</div>
+          <div class="custom-select" id="modeSelect">
+            <div class="selected">1v1 <span>▼</span></div>
+            <div class="options">
+              <div data-value="1v1">1v1</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">LOBBY</div>
+          <div class="custom-select" id="lobbySelect">
+            <div class="selected">Public <span>▼</span></div>
+            <div class="options">
+              <div data-value="public">Public</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-label">AMOUNT OF TON</div>
+          <div class="modal-amount" id="amountDisplay">
+            <span id="amountValue">0</span>
+            <img src="assets/ton.png" alt="TON logo">
+          </div>
+        </div>
+        <div class="keyboard">
+          <button class="key" data-value="1">1</button>
+          <button class="key" data-value="2">2</button>
+          <button class="key" data-value="3">3</button>
+          <button class="key" data-value="4">4</button>
+          <button class="key" data-value="5">5</button>
+          <button class="key" data-value="6">6</button>
+          <button class="key" data-value="7">7</button>
+          <button class="key" data-value="8">8</button>
+          <button class="key" data-value="9">9</button>
+          <button class="key" data-value=".">.</button>
+          <button class="key" data-value="0">0</button>
+          <button class="key delete" data-value="delete">⌫</button>
+        </div>
+        <button class="create-btn" id="createMatchBtn">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/common.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/friends.js"></script>
+</body>
+</html>
